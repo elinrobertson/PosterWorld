@@ -22,4 +22,4 @@ const productJoiSchema = Joi.object({
     description: Joi.string().strict().required(),
 });
 
-module.exports = { ProductModel, ProductSchema }
+module.exports = { ProductModel, ProductSchema, productJoiSchema }
