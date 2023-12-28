@@ -1,6 +1,8 @@
 // import React from 'react'
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPerson } from "react-icons/go";
+import { IoEarthOutline } from "react-icons/io5";
+
 import "./Navbar.css"
 
 const Navbar = () => {
@@ -11,7 +13,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-container">
             <div className="logo-container">
-                <h2>Poster</h2><span>World</span>
+                <h2>Poster</h2><span>W</span><IoEarthOutline /><span>rld</span>
             </div>
             <div className="links-container">
                 <ul>

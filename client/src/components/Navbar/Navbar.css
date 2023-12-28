@@ -34,10 +34,11 @@
     display: flex;
     justify-content: left;
     align-items: center;
+    font-size: 1.6rem;
 }
 
 .logo-container h2, span {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
