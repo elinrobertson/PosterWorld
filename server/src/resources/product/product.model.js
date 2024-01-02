@@ -1,15 +1,16 @@
-const { model, Schema, models } = require("mongoose");
+const { model, Schema, models, Types } = require("mongoose");
 const Joi = require("joi");
 
 const ProductSchema = new Schema(
     {
+        _id: { type: Types.ObjectId, auto: true },
         title: { type: String, required: true },
         price: { type: Number, required: true },
         category: { type: String, required: true },
         description: { type: String, required: true },
         inStock: { type: Number, required: true, default: 0 },
         images: { type: String, required: true },
-    },{versionKey: false});
+    },{ versionKey: false });
 
 const ProductModel = models.product || model("product", ProductSchema);
 console.log("ProductModel created:", ProductModel);

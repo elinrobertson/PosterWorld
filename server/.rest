@@ -6,3 +6,9 @@ GET http://localhost:3000/api/products/byCategory/Djur
 
 ###
 GET http://localhost:3000/api/products/658e94dd2cb9b8faf7ba80dd
+
+###
+GET http://localhost:3000/api/categories
+
+###
+GET http://localhost:3000/api/categories/659407c9287ab551af74eb90
