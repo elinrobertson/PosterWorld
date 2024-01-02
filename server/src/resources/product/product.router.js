@@ -1,6 +1,7 @@
 const express = require("express");
 const { getProducts } = require("./product.controller");
 // const { productJoiSchema } = require("./product.model");
+const { getProductsByCategory, getProductsById } = require("./product.controller")
 const productRouter = express.Router();
 
 // Logga att routen träffas
@@ -15,4 +16,9 @@ productRouter.get("", async (req, res) => {
     }
 });
 
-module.exports = productRouter;  // Exportera routern, inte ett objekt
+productRouter.get("/byCategory/:categoryName", getProductsByCategory);
+productRouter.get("/:id", getProductsById);
+
+
+
+module.exports = productRouter;
