@@ -8,4 +8,4 @@ userRouter.post("/register", validate(userJoiSchema), registerUser);
 userRouter.post("/login", loginUser)
 userRouter.post("/logout", logoutUser)
 
-module.exports = { userRouter }
+module.exports = userRouter;

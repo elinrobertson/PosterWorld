@@ -3,7 +3,7 @@ const cors = require("cors");
 const cookieSession = require("cookie-session");
 const productRouter = require("./resources/product/product.router");
 const categoryRouter = require("./resources/category/category.router");
-const { userRouter } = require("./resources/user/user.router");
+const userRouter = require("./resources/user/user.router");
 
 const app = express();
 
