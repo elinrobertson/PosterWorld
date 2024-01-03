@@ -84,14 +84,20 @@
 .links-container a {
     color: black;
     text-decoration: none;
+    font-weight: 400;
 }
 
+.links-container .active a {
+    font-weight: 500;
+  }
 
-.links-container a:hover,
+
+
+/* .links-container a:hover,
 .links-container a:active,
 .links-container a:focus {
     border-bottom: 2px #89B9AD solid;
-}
+} */
 
 
 

@@ -3,6 +3,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPerson } from "react-icons/go";
 import { IoEarthOutline } from "react-icons/io5";
 import { Link, NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import "./Navbar.css"
 
 // Detta är Headern
@@ -15,6 +16,7 @@ interface Category {
 
 const Navbar: React.FC = () => {
     const [categories, setCategories] = useState<Category[]>([]);
+    const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -33,6 +35,7 @@ const Navbar: React.FC = () => {
 
         fetchCategories();
     }, []);
+
 
     
   return (
@@ -54,9 +57,18 @@ const Navbar: React.FC = () => {
             <div className="links-container">
                 <ul>
             {categories.map((category) => (
-                <li key={category._id}>
-                <Link to={`/${category.title.toLowerCase()}`}>{category.title}</Link>
-                </li>
+                <motion.li 
+                    key={category._id}
+                    className={category.title.toLowerCase() === activeCategory ? "active" : ""}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}>
+                    <Link
+                        to={`/${category.title.toLowerCase()}`}
+                        onClick={() => setActiveCategory(category.title.toLowerCase())}
+                        >
+                        {category.title}
+                    </Link>
+                </motion.li>
             ))}
                 </ul>
             </div>
