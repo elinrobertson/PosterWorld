@@ -1,8 +1,13 @@
 .navbar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
     height: 6rem;
     width: 100vw;
     border-bottom: 1px #f2f2f2 solid;
-    /* border: 1px black solid; */
+    background-color: white;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
 }
 
 .discount-container {
@@ -49,9 +54,6 @@
     font-weight: 300;
 }
 
-.logo-link IoEarthOutline {
-    color: orange
-}
 
 .logo-link {
     display: flex;
@@ -90,15 +92,6 @@
 .links-container .active a {
     font-weight: 500;
   }
-
-
-
-/* .links-container a:hover,
-.links-container a:active,
-.links-container a:focus {
-    border-bottom: 2px #89B9AD solid;
-} */
-
 
 
 .icons-container {

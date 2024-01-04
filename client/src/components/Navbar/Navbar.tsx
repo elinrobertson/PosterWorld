@@ -36,7 +36,6 @@ const Navbar: React.FC = () => {
         fetchCategories();
     }, []);
 
-
     
   return (
     <div className="navbar-wrapper">
