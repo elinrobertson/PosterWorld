@@ -1,19 +1,16 @@
-// import React from "react";
-import { Route, Routes } from "react-router-dom";
-// import ProductList from '../ProductList/ProductList';
-// import ProductDetail from '../ProductDetail/ProductDetail';
-// import Login from '../Login/Login';
-// import Admin from '../Admin/Admin';
-// import CreateUser from '../CreateUser/CreateUser';
-// import Orders from '../Orders/Orders';
-// import Checkout from '../Checkout/Checkout';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from '../Home/Home';
 
-const Main = () => {
-    return (
-        <div className="main-content">
-            <Routes>
-               
-            </Routes>
-        </div>
-    )
+const Main: React.FC = () => {
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* Lägg till fler rutter här */}
+      </Routes>
+    </div>
+  );
 }
+
+export default Main;
