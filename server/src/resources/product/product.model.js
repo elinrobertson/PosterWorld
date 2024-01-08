@@ -9,7 +9,7 @@ const ProductSchema = new Schema(
         category: { type: String, required: true },
         description: { type: String, required: true },
         inStock: { type: Number, required: true, default: 0 },
-        images: { type: String, required: true },
+        images: { type: [String], required: true },
     },{ versionKey: false });
 
 const ProductModel = models.product || model("product", ProductSchema);
@@ -22,7 +22,7 @@ const productJoiSchema = Joi.object({
     category: Joi.string().required(),
     description: Joi.string().strict().required(),
     inStock: Joi.number().strict().required(),
-    images: Joi.string().uri().required(),
+    images: Joi.string().required(),
 });
 
 module.exports = { ProductModel, ProductSchema, productJoiSchema }
