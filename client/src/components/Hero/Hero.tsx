@@ -1,5 +1,6 @@
 import React from 'react';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { hero1, hero2, hero3 } from '../../assets/HeroImages';
 import "./Hero.css";
 
 interface Slide {
@@ -7,9 +8,9 @@ interface Slide {
 }
 
 const slides: Slide[] = [
-    { imageUrl: 'https://scontent-cph2-1.xx.fbcdn.net/v/t39.30808-6/282333214_2593376810793691_6061322936497149865_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=783fdb&_nc_ohc=HE_CijvzSbsAX8OZ_Iz&_nc_ht=scontent-cph2-1.xx&oh=00_AfBFEA3mkqS8J6hH-yMmUB9YJA8oauO-qNl0zVeYYiagRg&oe=659AA148' },
-    { imageUrl: 'https://deseniogroup.com/wp-content/uploads/2022/05/DG-Home-1-Header-Main-kopia-2-scaled.jpg' },
-    { imageUrl: 'https://cdn.europosters.eu/image/hp/66515.jpg' },
+    { imageUrl: hero1 },
+    { imageUrl: hero2 },
+    { imageUrl: hero3 },
   ];
 
 

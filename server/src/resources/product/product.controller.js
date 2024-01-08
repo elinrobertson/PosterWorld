@@ -1,4 +1,5 @@
 const { ProductModel } = require("./product.model");
+// const { Product } = require("./product.model");
 
 
 //Hämtar alla produkter
@@ -16,8 +17,8 @@ const getProducts = async (req, res)  => {
 
 //Hämtar alla produkter i en specifik kategori
 const getProductsByCategory = async (req, res, next) => {
-    try{
-        const products = await ProductModel.find({ category:req.params.categoryName }); 
+    try {
+        const products = await ProductModel.find({ category: req.params.categoryName });
         res.status(200).json(products);
     } catch (error) {
         res.status(400).json(error);

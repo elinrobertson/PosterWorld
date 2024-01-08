@@ -2,7 +2,7 @@
 GET http://localhost:3000/api/products
 
 ###
-//Hämta enskild kategori
+//Hämta alla produkter i enskild kategori
 GET http://localhost:3000/api/products/byCategory/Djur
 
 ###
@@ -16,6 +16,10 @@ GET http://localhost:3000/api/categories
 ###
 //Hämta kategori med specifikt ID
 GET http://localhost:3000/api/categories/659407c9287ab551af74eb90
+
+###
+//Hämtar alla produkter i en specifik kategori
+GET http://localhost:3000/api/categories/659407c9287ab551af74eb90/products
 
 ###
 // Registrera användare

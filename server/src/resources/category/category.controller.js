@@ -1,11 +1,12 @@
-const { CategoryModel } = require("./category.model");
+const { ProductModel } = require("../product/product.model")
+ const { CategoryModel } = require("./category.model");
 
 
 // Hämtar alla kategorier
 const getCategories = async () => {
     try {
         const categories = await CategoryModel.find();
-        console.log("Categories from controller:", categories);
+        // console.log("Categories from controller:", categories);
         return categories;
     } catch (error) {
         console.log("Error in controller:", error);
@@ -22,6 +23,25 @@ const getCategoryById = async (req, res) => {
     }
 }
 
-module.exports = { getCategories, getCategoryById };
+const getProductsByCategory = async (req, res) => {
+    try {
+      const categoryId = req.params.categoryId;
+      const products = await ProductModel.find({ category: categoryId });
+      res.json(products);
+    } catch (error) {
+      console.error('Error fetching products by category:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+
+
+
+
+
+
+
+
+module.exports = { getCategories, getCategoryById, getProductsByCategory };
 
 
