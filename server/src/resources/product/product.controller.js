@@ -17,7 +17,9 @@ const getProducts = async (req, res)  => {
 
 //Hämtar alla produkter i en specifik kategori
 const getProductsByCategory = async (req, res, next) => {
+    // console.log("Requested category:", req.params.categoryName);
     try {
+        // console.log("Fetching products for category:", req.params.categoryName);
         const products = await ProductModel.find({ category: req.params.categoryName });
         res.status(200).json(products);
     } catch (error) {

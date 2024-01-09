@@ -6,3 +6,15 @@
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
+
+button {
+    height: 1.5rem;
+    width: 5rem;
+    border-radius: 3px;
+    border: 1px black solid;
+    background-color: white;
+    font-weight: 500;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    text-align: center;
+}

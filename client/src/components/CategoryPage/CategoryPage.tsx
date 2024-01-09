@@ -8,7 +8,6 @@ const CategoryPage: React.FC = () => {
 
     return (
         <div>
-            <h2>{category} Kategori</h2>
             <ProductList categoryName={category || ''} />
         </div>
     )

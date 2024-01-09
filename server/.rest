@@ -11,7 +11,7 @@ GET http://localhost:3000/api/products/658e94dd2cb9b8faf7ba80dd
 
 ###
 //Hämta alla kategorier
-GET http://localhost:3000/api/categories
+GET http://localhost:3000/api/categories/
 
 ###
 //Hämta kategori med specifikt ID

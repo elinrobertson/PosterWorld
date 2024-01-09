@@ -63,7 +63,12 @@ const Navbar: React.FC = () => {
                     whileTap={{ scale: 0.9 }}>
                     <Link
                         to={`/${category.title.toLowerCase()}`}
-                        onClick={() => setActiveCategory(category.title.toLowerCase())}
+                        onClick={() => {
+                            console.log("Before:", activeCategory);
+                            setActiveCategory(activeCategory === category.title.toLowerCase() ? null : category.title.toLowerCase());
+                            console.log("After:", activeCategory);
+                        }}
+                        
                         >
                         {category.title}
                     </Link>

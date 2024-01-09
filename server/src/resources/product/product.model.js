@@ -13,7 +13,6 @@ const ProductSchema = new Schema(
     },{ versionKey: false });
 
 const ProductModel = models.product || model("product", ProductSchema);
-console.log("ProductModel created:", ProductModel);
 
 
 const productJoiSchema = Joi.object({

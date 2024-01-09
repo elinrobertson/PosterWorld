@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
+import "./ProductList.css"
 
 interface ProductInfo {
   _id: string;
@@ -8,7 +9,13 @@ interface ProductInfo {
   category: string;
   description: string;
   inStock: number;
-  images: string[]; // Anpassa detta beroende på hur bilderna är lagrade i din databas
+  images: string[];
+}
+
+interface Category {
+  _id: string;
+  title: string;
+  description: string;
 }
 
 interface ProductListProps {
@@ -18,54 +25,65 @@ interface ProductListProps {
 const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
   const [products, setProducts] = useState<ProductInfo[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
-
+  const [category, setCategory] = useState<Category | null>(null);
 
   useEffect(() => {
-    setProducts([]); // Rensa produkter när kategorin ändras
-    setHasMore(true); // Återställ hasMore när kategorin ändras
-    setCurrentPage(1); // Återställ currentPage när kategorin ändras
-
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/api/products/byCategory/${categoryName.toLowerCase()}?page=${currentPage}`);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.length === 0) {
-          setHasMore(false); // Inga fler produkter att hämta
-        } else {
-          setProducts((prevProducts) => [...prevProducts, ...data]);
-        }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        console.error('Error fetching products:', error.message);
-      }
-    };
-
+    setProducts([]);
+    setLoading(true);
+    setCurrentPage(1);
     fetchProducts();
-  }, [currentPage, categoryName]);
+  }, [categoryName]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/products/byCategory/${categoryName.toLowerCase()}?page=${currentPage}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.length === 0) {
+        setHasMore(false);
+      } else {
+        // Uppdatera produkterna endast om vi är på första sidan, annars lägg till nya produkter
+        setProducts((prevProducts) => (currentPage === 1 ? data : [...prevProducts, ...data]));
+        setCurrentPage((prevPage) => prevPage + 1);
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const loadMore = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  }
+    // Ladda fler produkter endast om det inte pågår en laddning och det finns fler
+    if (!loading && hasMore) {
+      fetchProducts();
+    }
+  };
 
   return (
     <div>
-    <h3>Produkter i Kategori</h3>
-    <ul>
-      {products.map((product, index) => (
-        <li key={`${product._id}_${index}`}>
-          <ProductCard product={product} />
-        </li>
-      ))}
-    </ul>
-    {hasMore && <button onClick={loadMore}>Visa mer</button>}
-  </div>
+      <div className="productlist-main">
+      <h3>Produkter i Kategori</h3>
+        <ul className="productlist">
+          {products.map((product, index) => (
+            <li key={`${product._id}_${index}`}>
+              <ProductCard product={product} />
+            </li>
+          ))}
+        </ul>
+        {loading && <p>Loading...</p>}
+        {hasMore && !loading && <button onClick={loadMore}>Visa mer</button>}
+      </div>
+    </div>
   );
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import "./ProductCard.css"
 
 interface ProductCardProps {
     product: {
@@ -13,15 +14,17 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-    console.log('Product images:', product.images);
 
     const firstImage = product.images && product.images.length > 0 ? product.images[0]: 'placeholder.jpg'
   return (
-    <div>
-      <p>Title: {product.title}</p>
-      <p>Price: {product.price}</p>
-      <p>Category: {product.category}</p>
-      <img src={firstImage} alt={product.title} />
+    <div className='main-content'>
+        <div className="productcard">
+            <img src={firstImage} alt={product.title} />
+            <div className="productcard-info">
+              <h2>{product.title}</h2>
+              <p>{product.price} kr</p>
+            </div>
+        </div>
     </div>
   );
 }
