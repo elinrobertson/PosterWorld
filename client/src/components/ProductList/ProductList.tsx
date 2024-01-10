@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
+import { motion } from "framer-motion";
 import "./ProductList.css"
 
 interface ProductInfo {
@@ -81,7 +82,10 @@ const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
           ))}
         </ul>
         {/* {loading && <p>Loading...</p>} */}
-        {hasMore && !loading && <button onClick={loadMore}>Visa mer</button>}
+        {hasMore && !loading && <motion.button 
+        onClick={loadMore}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}>Visa mer</motion.button>}
       </div>
     </div>
   );

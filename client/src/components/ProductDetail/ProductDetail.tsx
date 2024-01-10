@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import "./ProductDetail.css";
 
 interface ProductDetailProps {
@@ -42,7 +43,10 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
           <p id='description'>{product.description}</p>
           <p id='price'>{product.price} kr</p>
           <div className="button-container">
-            <button>Lägg i varukorgen</button>
+            <motion.button 
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}>Lägg i varukorgen
+            </motion.button>
             <p id='instock'>In Stock: {product.inStock}</p>
           </div>
         </div>
