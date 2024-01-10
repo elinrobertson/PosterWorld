@@ -12,11 +12,11 @@ interface ProductInfo {
   images: string[];
 }
 
-interface Category {
-  _id: string;
-  title: string;
-  description: string;
-}
+// interface Category {
+//   _id: string;
+//   title: string;
+//   description: string;
+// }
 
 interface ProductListProps {
   categoryName: string;
@@ -27,7 +27,7 @@ const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [category, setCategory] = useState<Category | null>(null);
+  // const [category, setCategory] = useState<Category | null>(null);
 
   useEffect(() => {
     setProducts([]);
@@ -72,7 +72,7 @@ const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
   return (
     <div>
       <div className="productlist-main">
-      <h3>Produkter i Kategori</h3>
+      <h3>{categoryName}</h3>
         <ul className="productlist">
           {products.map((product, index) => (
             <li key={`${product._id}_${index}`}>
@@ -80,7 +80,7 @@ const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
             </li>
           ))}
         </ul>
-        {loading && <p>Loading...</p>}
+        {/* {loading && <p>Loading...</p>} */}
         {hasMore && !loading && <button onClick={loadMore}>Visa mer</button>}
       </div>
     </div>

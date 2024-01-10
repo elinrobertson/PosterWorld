@@ -5,6 +5,16 @@
     margin-top: 8rem;
 }
 
+.productlist-main h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
 .category-info {
     display: flex;
     flex-direction: column;
