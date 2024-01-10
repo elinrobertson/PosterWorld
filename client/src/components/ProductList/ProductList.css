@@ -1,8 +1,19 @@
 .productlist-main {
+    /* background-color: pink; */
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     margin-top: 8rem;
+}
+
+.productlist {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.3rem; /* Adjust the gap between images */
+    padding: 0 2rem;
+    width: calc(100% - 4rem);
+    margin: 0 auto;
 }
 
 .productlist-main h3 {
@@ -13,6 +24,7 @@
     letter-spacing: 1px;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
+    /* background-color: orange; */
 }
 
 .category-info {
@@ -35,17 +47,14 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin: 0 10rem;
     font-size: 1rem;
 }
 
-.productlist {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-    margin: 0 15rem;
-  } 
-
 .productlist li {
     list-style-type: none;
+    /* background-color: red; */
+}
+
+.productlist-main button {
+    margin: 1rem 0;
 }
