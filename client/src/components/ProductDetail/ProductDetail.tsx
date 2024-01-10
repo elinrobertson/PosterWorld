@@ -31,16 +31,21 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
   }, [id]);
 
   return (
-    <div className="productdetail">
+    <div className="productdetail-wrapper">
       {product ? (
         <>
-          <br /><br /><br /><br /><br />
-          <h2>{product.title}</h2>
-          <p>Price: {product.price} kr</p>
-          <p>Category: {product.category}</p>
-          <p>Description: {product.description}</p>
-          <p>In Stock: {product.inStock}</p>
+        <div className="image-container">
           <img src={product.images} alt={product.title} />
+        </div>
+        <div className="detail-container">
+          <h2>{product.title}</h2>
+          <p id='description'>{product.description}</p>
+          <p id='price'>{product.price} kr</p>
+          <div className="button-container">
+            <button>Lägg i varukorgen</button>
+            <p id='instock'>In Stock: {product.inStock}</p>
+          </div>
+        </div>
         </>
       ) : (
         <p>Loading...</p>
