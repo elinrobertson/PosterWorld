@@ -1,7 +1,5 @@
 const express = require("express");
-const { getProducts } = require("./product.controller");
-// const { productJoiSchema } = require("./product.model");
-const { getProductsByCategory, getProductsById } = require("./product.controller")
+const { getProducts, getProductsByCategory, getProductsById, getProductByTitle } = require("./product.controller")
 const productRouter = express.Router();
 
 // Logga att routen träffas
@@ -18,6 +16,7 @@ productRouter.get("", async (req, res) => {
 
 productRouter.get("/byCategory/:categoryName", getProductsByCategory);
 productRouter.get("/:id", getProductsById);
+productRouter.get("/:category/:title", getProductByTitle);
 
 
 

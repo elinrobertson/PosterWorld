@@ -3,11 +3,14 @@ GET http://localhost:3000/api/products
 
 ###
 //Hämta alla produkter i enskild kategori
-GET http://localhost:3000/api/products/byCategory/Djur
+GET http://localhost:3000/api/products/byCategory/djur
 
 ###
 //Hämta produkt med specifikt ID
 GET http://localhost:3000/api/products/658e94dd2cb9b8faf7ba80dd
+
+###
+GET http://localhost:3000/api/products/djur/butterfly%20on%20flower
 
 ###
 //Hämta alla kategorier

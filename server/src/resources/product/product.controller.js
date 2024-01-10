@@ -17,9 +17,9 @@ const getProducts = async (req, res)  => {
 
 //Hämtar alla produkter i en specifik kategori
 const getProductsByCategory = async (req, res, next) => {
-    // console.log("Requested category:", req.params.categoryName);
+    console.log("Requested category:", req.params.categoryName);
     try {
-        // console.log("Fetching products for category:", req.params.categoryName);
+        console.log("Fetching products for category:", req.params.categoryName);
         const products = await ProductModel.find({ category: req.params.categoryName });
         res.status(200).json(products);
     } catch (error) {
@@ -37,5 +37,23 @@ const getProductsById = async (req, res, next) => {
     }
 };
 
+const getProductByTitle = async (req, res, next) => {
+    const title = req.params.title;
+    try {
+        console.log("Requested title:", title);
 
-module.exports = { getProducts, getProductsByCategory, getProductsById };
+        const product = await ProductModel.findOne({ title: title });
+        if (product) {
+            res.status(200).json(product);
+        } else {
+            res.status(404).json({ error: "Product not found" });
+        }
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+
+
+module.exports = { getProducts, getProductsByCategory, getProductsById, getProductByTitle };

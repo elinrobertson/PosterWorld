@@ -10,7 +10,7 @@ const Main: React.FC = () => {
       <Routes>
         <Route path="*" element={<Home />} />
         <Route path="/:category/*" element={<CategoryPage />} />
-        <Route path="/:category/:productTitle" element={<ProductDetail />} />
+        <Route path="/:category/:id" element={<ProductDetail />} />
         {/* Lägg till fler rutter här */}
       </Routes>
     </div>
