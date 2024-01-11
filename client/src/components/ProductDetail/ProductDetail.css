@@ -13,6 +13,7 @@
 .image-container {
  flex: 1;
  /* background-color: orange; */
+ position: relative;
  display: flex;
  justify-content: center;
  align-items: center;
@@ -22,6 +23,26 @@
     width: 60%;
     height: 60%;
 }
+
+.arrow-icons {
+    width: 60%;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    position: absolute;
+}
+
+.arrows {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.arrow-icons.first-slide {
+    flex-direction: row-reverse;
+  }
+  
 
 .detail-container {
     flex: 1;

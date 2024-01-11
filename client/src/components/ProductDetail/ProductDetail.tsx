@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import "./ProductDetail.css";
 
 interface ProductDetailProps {
@@ -11,6 +12,7 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
   const { id } = useParams();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [product, setProduct] = useState<any>(null);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -31,12 +33,26 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
     fetchProduct();
   }, [id]);
 
+  const scroll = (direction: 'left' | 'right') => {
+    if (direction === 'left') {
+        setCurrentSlide((prevSlide) => (prevSlide === 0 ? product.images.length - 1 : prevSlide - 1));
+    } else {
+        setCurrentSlide((prevSlide) => (prevSlide === product.images.length - 1 ? 0 : prevSlide + 1));
+    }
+};
+
   return (
     <div className="productdetail-wrapper">
       {product ? (
         <>
         <div className="image-container">
-          <img src={product.images} alt={product.title} />
+          <img className="product-img" src={product.images[currentSlide]} alt={product.title} />
+            {product.images.length > 1 && (
+              <div className="arrow-icons">
+                <MdOutlineKeyboardArrowLeft className="arrows" onClick={() => scroll('left')} />
+                <MdOutlineKeyboardArrowRight className="arrows" onClick={() => scroll('right')} />
+              </div>
+            )}
         </div>
         <div className="detail-container">
           <h2>{product.title}</h2>

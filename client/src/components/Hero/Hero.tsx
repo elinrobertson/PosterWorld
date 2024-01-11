@@ -33,7 +33,7 @@ const Hero = () => {
   return (
     <div className='hero-section'>
         <img className="hero-img" src={slides[currentSlide].imageUrl} alt="hero image" />
-            <div className="arrow-icons">
+            <div className="arrows-icons">
                 <MdOutlineKeyboardArrowLeft className="arrows" onClick={() => scroll('left')}/>
                 <MdOutlineKeyboardArrowRight className="arrows" onClick={() => scroll('right')}/>
             </div>
