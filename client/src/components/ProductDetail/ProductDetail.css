@@ -39,9 +39,6 @@
     cursor: pointer;
 }
 
-.arrow-icons.first-slide {
-    flex-direction: row-reverse;
-  }
   
 
 .detail-container {

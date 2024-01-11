@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import { useCart } from '../../context/CartContext';
 import "./ProductDetail.css";
 
 interface ProductDetailProps {
@@ -10,6 +11,7 @@ interface ProductDetailProps {
 
 const ProductDetail: React.FC<ProductDetailProps> = () => {
   const { id } = useParams();
+  const { addToCart } = useCart();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [product, setProduct] = useState<any>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -41,6 +43,12 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
     }
 };
 
+const handleAddToCart = () => {
+  if(product) {
+    addToCart(product._id);
+  }
+}
+
   return (
     <div className="productdetail-wrapper">
       {product ? (
@@ -61,7 +69,8 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
           <div className="button-container">
             <motion.button 
               whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}>Lägg i varukorgen
+              whileTap={{ scale: 0.9 }}
+              onClick={handleAddToCart}>Lägg i varukorgen
             </motion.button>
             <p id='instock'>In Stock: {product.inStock}</p>
           </div>
