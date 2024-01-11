@@ -1,6 +1,6 @@
 // import React from 'react'
 import "./Footer.css"
-import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaTiktok, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -20,6 +20,7 @@ const Footer = () => {
           <h2>Sociala medier</h2>
           <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
           <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer"><FaTiktok /></a>
         </div>
     </div>
