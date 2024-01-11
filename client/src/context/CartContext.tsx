@@ -6,6 +6,8 @@ interface CartItem {
   quantity: number;
 }
 
+// lägg till pris och titel, eventuellt bild
+
 interface CartContextProps {
   cart: CartItem[];
   addToCart: (productId: string) => void;
