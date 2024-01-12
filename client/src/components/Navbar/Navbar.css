@@ -100,10 +100,32 @@
     width: 25%;
     display: flex;
     flex-direction: row;
-    justify-content: right;
+    justify-content: flex-end;
     align-items: center;
     font-size: 2rem;
     gap: 0.5rem;
 }
 
+.icons-container svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-icon {
+    position: relative;
+    align-items: center;
+}
+
+.cart-item-count {
+    background-color: #89B9AD;
+    font-size: 0.7rem;
+    color: white;
+    border-radius: 50%; 
+    padding: 0.2rem 0.4rem;
+    position: absolute; 
+    top: -0.3rem;
+    right: -0.5rem;
+    z-index: 1;
+}
 
