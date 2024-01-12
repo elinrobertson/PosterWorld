@@ -70,3 +70,19 @@
     justify-content: space-between;
     align-items: center;
 }
+
+#instock {
+    display: flex;
+    /* background-color: orange; */
+    justify-content: center;
+    align-items: center;
+    color: #809F8A;
+}
+
+#instock svg {
+    font-size: 1.3rem;
+}
+
+.motion-button-disabled {
+    cursor: not-allowed;
+  }
