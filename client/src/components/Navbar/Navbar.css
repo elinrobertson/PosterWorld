@@ -112,6 +112,10 @@
     justify-content: center;
 }
 
+.icons-container svg:hover {
+    cursor: pointer;
+}
+
 .cart-icon {
     position: relative;
     align-items: center;

@@ -82,8 +82,6 @@ const Navbar: React.FC = () => {
                     <GoPerson />
                     <motion.div
                         className="cart-icon"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
                     >
                     {isCartEmpty ? <HiOutlineShoppingBag /> : <HiShoppingBag />}
                     {cartItemCount > 0 && <div className="cart-item-count">{cartItemCount}</div>}
