@@ -63,7 +63,6 @@ const ImageSlider = () => {
 
   return (
     <div className='imageslider-container'>
-      <h2>Nyheter</h2>
       <div className='image-wrapper'>
         {visibleProducts.map((product) => (
           <div key={product._id}>
