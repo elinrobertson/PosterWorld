@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ImageSlider.css';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 // Deklarera en generisk typ för produkter
 interface Product {
@@ -12,6 +13,7 @@ interface Product {
 const ImageSlider = () => {
   const [sliderImages, setSliderImages] = useState<Product[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRandomProducts = async () => {
@@ -67,14 +69,19 @@ const ImageSlider = () => {
           <div key={product._id}>
             {product.images.map((image, index) => (
               index === 0 && (
-                <img key={index} src={image} alt={`${product.title} - Image ${index + 1}`} />
+                <img
+                  key={index}
+                  src={image}
+                  alt={`${product.title} - Image ${index + 1}`}
+                  onClick={() => navigate(`/products/${product._id}`)}
+                />
               )
             ))}
           </div>
         ))}
         <div className='imageslider-arrows'>
-            <MdOutlineKeyboardArrowLeft className='arrow' onClick={handlePrevClick} />
-            <MdOutlineKeyboardArrowRight className='arrow' onClick={handleNextClick} />
+          <MdOutlineKeyboardArrowLeft className='arrow' onClick={handlePrevClick} />
+          <MdOutlineKeyboardArrowRight className='arrow' onClick={handleNextClick} />
         </div>
       </div>
     </div>
