@@ -6,46 +6,44 @@ interface CartItem {
   quantity: number;
 }
 
-// lägg till pris och titel, eventuellt bild
+interface Product {
+  title: string;
+  price: number;
+}
 
 interface CartContextProps {
   cart: CartItem[];
   addToCart: (productId: string) => void;
+  total: number;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
-const CartProvider: React.FC<PropsWithChildren<React.ReactNode>> = ({ children }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
+  const [cart, setCart] = useState<CartItem[]>(loadCartFromCookie);
+  const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
-    // Ladda varukorgen från cookie när komponenten monteras
-    const savedCart = Cookies.get('cart');
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
-
-  useEffect(() => {
-    // Spara varukorgen i cookie när den uppdateras
     Cookies.set('cart', JSON.stringify(cart), { sameSite: 'strict' });
+
+    const newTotal = cart.reduce((total, item) => {
+      const productPrice = getProductPrice(item.productId);
+      return total + productPrice * item.quantity;
+    }, 0);
+
+    setTotal(newTotal);
   }, [cart]);
 
   const addToCart = useCallback(
     (productId: string) => {
-      // Implementera logik för att lägga till produkter i varukorgen här
-      // Du kan använda din befintliga addToCart-funktion här
-
       setCart((prevCart) => {
         const existingCartItem = prevCart.find((item) => item.productId === productId);
 
         if (existingCartItem) {
-          // Om produkten redan finns i varukorgen, öka antalet
           return prevCart.map((item) =>
             item.productId === productId ? { ...item, quantity: item.quantity + 1 } : item
           );
         } else {
-          // Om produkten inte finns i varukorgen, lägg till den
           return [...prevCart, { productId, quantity: 1 }];
         }
       });
@@ -53,8 +51,8 @@ const CartProvider: React.FC<PropsWithChildren<React.ReactNode>> = ({ children }
     [setCart]
   );
 
-  return <CartContext.Provider value={{ cart, addToCart }}>{children}</CartContext.Provider>;
-};
+  return <CartContext.Provider value={{ cart, addToCart, total }}>{children}</CartContext.Provider>;
+}
 
 const useCart = () => {
   const context = useContext(CartContext);
@@ -64,5 +62,18 @@ const useCart = () => {
   return context;
 };
 
+const getProductPrice = (productId: string): number => {
+  const staticProductPrices: Record<string, number> = {
+    productId: 200,
+  };
+
+  return staticProductPrices[productId] || 0;
+};
+
+const loadCartFromCookie = (): CartItem[] => {
+  const savedCart = Cookies.get('cart');
+  return savedCart ? JSON.parse(savedCart) : [];
+};
+
 // eslint-disable-next-line react-refresh/only-export-components
-export { CartProvider, useCart };
+export { useCart };
