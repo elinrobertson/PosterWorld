@@ -1,17 +1,14 @@
 const { ProductModel } = require("./product.model");
-// const { Product } = require("./product.model");
 
 
 //Hämtar alla produkter
-const getProducts = async (req, res)  => {
-    console.log("Controller is hit!");
+const getProducts = async () => {
     try {
         const products = await ProductModel.find();
-        // console.log("Products from database:", products);
-        res.status(200).json(products);
+        return products; // Returnera produkterna istället för att skicka svar
     } catch (error) {
-        console.log("Error in controller:", error.message);
-        res.status(400).json(error);
+        console.error("Error fetching products:", error.message);
+        throw error; // Kasta felet för att hantera det i den överliggande koden
     }
 };
 
