@@ -5,6 +5,7 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-i
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { IoCloseOutline } from "react-icons/io5";
 import { useCart } from '../../context/CartContext';
+// import ImageSlider from '../ImageSlider/ImageSlider';
 import "./ProductDetail.css";
 
 interface ProductDetailProps {}
@@ -53,6 +54,7 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
     <div className="productdetail-wrapper">
       {product ? (
         <>
+        {/* <ImageSlider /> */}
           <div className="image-container">
             <img className="product-img" src={product.images[currentSlide]} alt={product.title} />
             {product.images.length > 1 && (

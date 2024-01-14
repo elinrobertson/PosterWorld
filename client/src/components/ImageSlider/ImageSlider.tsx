@@ -16,9 +16,11 @@ const ImageSlider = () => {
   useEffect(() => {
     const fetchRandomProducts = async () => {
       try {
+        console.log('Fetching products...'); // Lägg till denna logg
         // Hämta alla produkter med fetch
         const response = await fetch('http://localhost:3000/api/products');
         const allProducts: Product[] = await response.json();
+        console.log('Fetched products:', allProducts);
 
         // Slumpmässigt välj 9 produkter
         const randomProducts = getRandomProducts(allProducts, 9);

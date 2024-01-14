@@ -29,6 +29,7 @@ const Navbar: React.FC = () => {
         }
 
         const data = await response.json();
+        console.log('Fetched categories:', data); 
         setCategories(data);
       } catch (error) {
         console.error('Error fetching categories:', error);
