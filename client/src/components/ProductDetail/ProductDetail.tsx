@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
@@ -13,6 +13,7 @@ interface ProductDetailProps {}
 const ProductDetail: React.FC<ProductDetailProps> = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [product, setProduct] = useState<any>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -50,6 +51,10 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
     }
   };
 
+  const handleGoBack = () => {
+    navigate(-1);  // Gå tillbaka ett steg i historiken
+  };
+
   return (
     <div className="productdetail-wrapper">
       {product ? (
@@ -69,15 +74,22 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
             <p id='description'>{product.description}</p>
             <p id='price'>{product.price} kr</p>
             <div className="button-container">
-              <motion.button
-                whileHover={product.inStock > 0 ? { scale: 1.1 } : {}}
-                whileTap={product.inStock > 0 ? { scale: 0.9 } : {}}
-                onClick={() => handleAddToCart(product.inStock)}
-                disabled={product.inStock === 0}
-                className={product.inStock === 0 ? "motion-button-disabled" : ""}
-              >
-                Lägg i varukorgen
-              </motion.button>
+              <div className="button-container-buttons">
+                <motion.button
+                  whileHover={product.inStock > 0 ? { scale: 1.1 } : {}}
+                  whileTap={product.inStock > 0 ? { scale: 0.9 } : {}}
+                  onClick={() => handleAddToCart(product.inStock)}
+                  disabled={product.inStock === 0}
+                  className={product.inStock === 0 ? "motion-button-disabled" : ""}
+                >
+                  Lägg i varukorgen
+                </motion.button>
+                <motion.button 
+                  whileHover={{scale: 1.1}}
+                  whileTap={{scale: 0.9}}
+                  onClick={handleGoBack}>Tillbaka
+                </motion.button>
+              </div>
               <p id='instock'>
                 {product.inStock > 0 ? (
                   <>

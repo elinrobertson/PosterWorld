@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 interface CartItem {
   productId: string;
   quantity: number;
-  price?: number; // Lägg till pris för varje produkt i CartItem
+  price?: number;
 }
 
 interface CartContextProps {
@@ -12,7 +12,7 @@ interface CartContextProps {
   addToCart: (productId: string) => void;
   removeFromCart: (productId: string) => void;
   increaseQuantity: (productId: string) => void;
-  decreaseQuantity: (productId: string) => void; // Lägg till ny funktion för att ta bort produkter
+  decreaseQuantity: (productId: string) => void; 
   total: number;
 }
 
@@ -56,7 +56,6 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
     [setCart]
   );
 
-    // Funktion för att öka antalet av en produkt i varukorgen
   // Funktion för att minska antalet av en produkt i varukorgen
   const increaseQuantity = useCallback(
     (productId: string) => {

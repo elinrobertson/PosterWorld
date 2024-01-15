@@ -52,7 +52,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
     fetchProducts();
   }, [cart]);
 
-// ... (din tidigare kod)
 
   return (
     <Drawer title={"Varukorg"} placement="right" onClose={onClose} open={visible}>
