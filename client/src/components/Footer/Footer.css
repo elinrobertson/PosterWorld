@@ -1,0 +1,36 @@
+.footer-wrapper {
+    /* background-color: orange; */
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem 0;
+    border-top: 1px #f2f2f2 solid;
+}
+
+.footer-wrapper h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.footer-wrapper p {
+    font-size: 0.8rem;
+}
+
+.socials-section {
+    font-size: 1.5rem;
+}
+
+.socials-section a {
+    color: black;
+}
+
+.socials-section svg:hover {
+    transform: scale(1.1);
+}
+
+.socials-section > * {
+    margin-right: 1rem;
+}

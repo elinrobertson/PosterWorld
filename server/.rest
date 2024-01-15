@@ -1,0 +1,56 @@
+//Hämta alla produkter
+GET http://localhost:3000/api/products
+
+###
+//Hämta alla produkter i enskild kategori
+GET http://localhost:3000/api/products/byCategory/djur
+
+###
+//Hämta produkt med specifikt ID
+GET http://localhost:3000/api/products/658e94dd2cb9b8faf7ba80fb
+
+###
+GET http://localhost:3000/api/products/djur/butterfly%20on%20flower
+
+###
+//Hämta alla kategorier
+GET http://localhost:3000/api/categories/
+
+###
+//Hämta kategori med specifikt ID
+GET http://localhost:3000/api/categories/659407c9287ab551af74eb90
+
+###
+//Hämtar alla produkter i en specifik kategori
+GET http://localhost:3000/api/categories/659407c9287ab551af74eb90/products
+
+###
+// Registrera användare
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+  "firstName": "Elin",
+  "lastName": "Robertson",
+  "email": "elin@mail.se",
+  "password": "123456"
+}
+
+###
+//Logga in
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "elin@mail.se",
+  "password": "123456"
+}
+
+###
+//Logga ut
+POST http://localhost:3000/api/users/logout
+Content-Type: application/json
+
+{
+  "email": "elin@mail.se"
+}
