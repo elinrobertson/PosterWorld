@@ -1,14 +1,15 @@
-// CartDrawer.tsx
 import React, { useEffect, useState } from 'react';
 import { Drawer } from 'antd';
 import { useCart } from '../../context/CartContext';
+import { GoTrash } from "react-icons/go";
 import "./CartDrawer.css"
 
 interface Product {
-    title: string,
-    images: string[],
-    price: number;
-    quantity: number
+  productId: string;
+  title: string;
+  images: string[];
+  price: number;
+  quantity: number;
 }
 
 interface CartDrawerProps {
@@ -17,7 +18,7 @@ interface CartDrawerProps {
 }
 
 const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
-  const { cart } = useCart();
+  const { cart, removeFromCart } = useCart();
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
@@ -30,13 +31,12 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const data: Product = await response.json();
-          return { ...data, quantity: item.quantity }; // Lägg till kvantitet för varje produkt
+          return { ...data, quantity: item.quantity, productId: item.productId };
         });
 
         const productData = await Promise.all(productPromises);
         setProducts(productData);
 
-        // Uppdatera totalpriset varje gång produkterna ändras
         const newTotalPrice = productData.reduce((total, product) => {
           return total + product.price * product.quantity;
         }, 0);
@@ -52,20 +52,33 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
 
   return (
     <Drawer title={"Kundvagn"} placement="right" onClose={onClose} open={visible}>
-      {products.map((product, index) => (
-        <div className="drawer-info" key={index}>
-          <img src={product.images[0]} alt={product.title} />
-          <div className="prodict-info">
-            <p id='title'>{product.title}</p>
-            <p>Antal: {product.quantity}</p>
-            <p id='price-info'>Pris: {product.price * product.quantity} kr</p>
-
-          </div>
+      {cart.length === 0 ? (
+        <div className="drawer-info">
+          <p>Din varukorg är tom</p>
         </div>
-      ))}
-      <div className="drawer-info">
-        <p>Totalt pris: {totalPrice} kr</p>
-      </div>
+      ) : (
+        <>
+          {products.map((product, index) => (
+            <div className="drawer-info" key={index}>
+              <img src={product.images[0]} alt={product.title} />
+              <div className="prodict-info">
+                <p id='title'>{product.title}</p>
+                <p>Antal: {product.quantity}</p>
+                <p id='price-info'>Pris: {product.price * product.quantity} kr</p>
+                <button
+                  className="remove-button"
+                  onClick={() => removeFromCart(product.productId)}
+                >
+                  <GoTrash />
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="drawer-info">
+            <p>Totalt pris: {totalPrice} kr</p>
+          </div>
+        </>
+      )}
     </Drawer>
   );
 };

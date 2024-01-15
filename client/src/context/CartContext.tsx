@@ -7,14 +7,10 @@ interface CartItem {
   price?: number; // Lägg till pris för varje produkt i CartItem
 }
 
-// interface Product {
-//   title: string;
-//   price: number;
-// }
-
 interface CartContextProps {
   cart: CartItem[];
   addToCart: (productId: string) => void;
+  removeFromCart: (productId: string) => void; // Lägg till ny funktion för att ta bort produkter
   total: number;
 }
 
@@ -29,33 +25,37 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
 
     const newTotal = cart.reduce((total, item) => (item.price ? total + item.price * item.quantity : total), 0);
 
-
     setTotal(newTotal);
   }, [cart]);
-
 
   // Funktion för att lägga till produkter i varukorgen, memoized med useCallback
   const addToCart = useCallback(
     (productId: string) => {
       setCart((prevCart) => {
         const existingCartItemIndex = prevCart.findIndex((item) => item.productId === productId);
-  
+
         if (existingCartItemIndex !== -1) {
-          // Om produkten redan finns i varukorgen, öka antalet
           const updatedCart = [...prevCart];
           updatedCart[existingCartItemIndex].quantity += 1;
           return updatedCart;
         } else {
-          // Om produkten inte finns i varukorgen, lägg till den
           return [...prevCart, { productId, quantity: 1 }];
         }
       });
     },
     [setCart]
   );
-  
+
+  // Funktion för att ta bort produkter från varukorgen, memoized med useCallback
+  const removeFromCart = useCallback(
+    (productId: string) => {
+      setCart((prevCart) => prevCart.filter((item) => item.productId !== productId));
+    },
+    [setCart]
+  );
+
   // Returnera provider-komponenten med värdet av varukorgs-tillståndet
-  return <CartContext.Provider value={{ cart, addToCart, total }}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={{ cart, addToCart, removeFromCart, total }}>{children}</CartContext.Provider>;
 }
 
 // En hook för att använda varukorgs-tillståndet
