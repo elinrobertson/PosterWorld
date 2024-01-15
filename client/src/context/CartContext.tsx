@@ -10,7 +10,9 @@ interface CartItem {
 interface CartContextProps {
   cart: CartItem[];
   addToCart: (productId: string) => void;
-  removeFromCart: (productId: string) => void; // Lägg till ny funktion för att ta bort produkter
+  removeFromCart: (productId: string) => void;
+  increaseQuantity: (productId: string) => void;
+  decreaseQuantity: (productId: string) => void; // Lägg till ny funktion för att ta bort produkter
   total: number;
 }
 
@@ -54,8 +56,50 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
     [setCart]
   );
 
+    // Funktion för att öka antalet av en produkt i varukorgen
+  // Funktion för att minska antalet av en produkt i varukorgen
+  const increaseQuantity = useCallback(
+    (productId: string) => {
+      setCart((prevCart) => {
+        const updatedCart = [...prevCart];
+        const existingCartItem = updatedCart.find((item) => item.productId === productId);
+
+        if (existingCartItem) {
+          existingCartItem.quantity += 1;
+        }
+
+        return updatedCart;
+      });
+    },
+    [setCart]
+  );
+
+      // Funktion för att minska antalet av en produkt i varukorgen
+  const decreaseQuantity = useCallback(
+    (productId: string) => {
+      setCart((prevCart) => {
+        const updatedCart = [...prevCart];
+        const existingCartItem = updatedCart.find((item) => item.productId === productId);
+
+        if (existingCartItem && existingCartItem.quantity > 1) {
+          existingCartItem.quantity -= 1;
+        } else {
+          // Om antalet är 1 eller mindre, ta bort produkten från varukorgen
+          return updatedCart.filter((item) => item.productId !== productId);
+        }
+
+        return updatedCart;
+      });
+    },
+    [setCart]
+  );
+
   // Returnera provider-komponenten med värdet av varukorgs-tillståndet
-  return <CartContext.Provider value={{ cart, addToCart, removeFromCart, total }}>{children}</CartContext.Provider>;
+  return (
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, total }}>
+      {children}
+    </CartContext.Provider>
+  );
 }
 
 // En hook för att använda varukorgs-tillståndet

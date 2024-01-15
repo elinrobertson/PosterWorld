@@ -3,6 +3,8 @@ import { Drawer } from 'antd';
 import { useCart } from '../../context/CartContext';
 import { GoTrash } from "react-icons/go";
 import "./CartDrawer.css"
+import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
+
 
 interface Product {
   productId: string;
@@ -18,7 +20,7 @@ interface CartDrawerProps {
 }
 
 const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
@@ -50,8 +52,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
     fetchProducts();
   }, [cart]);
 
+// ... (din tidigare kod)
+
   return (
-    <Drawer title={"Kundvagn"} placement="right" onClose={onClose} open={visible}>
+    <Drawer title={"Varukorg"} placement="right" onClose={onClose} open={visible}>
       {cart.length === 0 ? (
         <div className="drawer-info">
           <p>Din varukorg är tom</p>
@@ -65,22 +69,23 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                 <p id='title'>{product.title}</p>
                 <p>Antal: {product.quantity}</p>
                 <p id='price-info'>Pris: {product.price * product.quantity} kr</p>
-                <button
-                  className="remove-button"
-                  onClick={() => removeFromCart(product.productId)}
-                >
-                  <GoTrash />
-                </button>
+                <div className="cart-buttons">
+                  <div className="circle-buttons">
+                    <button onClick={() => decreaseQuantity(product.productId)}><AiOutlineMinusCircle /></button>
+                    <button onClick={() => increaseQuantity(product.productId)}><AiOutlinePlusCircle /></button>
+                  </div>
+                  <button onClick={() => removeFromCart(product.productId)} className="trash-button"><GoTrash /></button>
+                </div>
               </div>
             </div>
           ))}
-          <div className="drawer-info">
+          <div className="total-price">
             <p>Totalt pris: {totalPrice} kr</p>
           </div>
         </>
       )}
     </Drawer>
   );
-};
+}
 
 export default CartDrawer;
