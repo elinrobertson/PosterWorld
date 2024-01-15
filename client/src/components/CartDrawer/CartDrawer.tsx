@@ -7,7 +7,8 @@ import "./CartDrawer.css"
 interface Product {
     title: string,
     images: string[],
-    price: number
+    price: number;
+    quantity: number
 }
 
 interface CartDrawerProps {
@@ -29,15 +30,15 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const data: Product = await response.json();
-          return data;
+          return { ...data, quantity: item.quantity }; // Lägg till kvantitet för varje produkt
         });
 
         const productData = await Promise.all(productPromises);
         setProducts(productData);
 
         // Uppdatera totalpriset varje gång produkterna ändras
-        const newTotalPrice = productData.reduce((total, product, index) => {
-          return total + product.price * cart[index].quantity;
+        const newTotalPrice = productData.reduce((total, product) => {
+          return total + product.price * product.quantity;
         }, 0);
 
         setTotalPrice(newTotalPrice);
@@ -55,11 +56,14 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
         <div className="drawer-info" key={index}>
           <p>Produkt: {product.title}</p>
           <img src={product.images[0]} alt={product.title} />
-          <p>Antal: {cart[index].quantity}</p>
-          <p>Pris: {totalPrice} kr</p>
+          <p>Antal: {product.quantity}</p>
+          <p>Pris: {product.price * product.quantity} kr</p>
           <hr />
         </div>
       ))}
+      <div className="drawer-info">
+        <p>Totalt pris: {totalPrice} kr</p>
+      </div>
     </Drawer>
   );
 };

@@ -4,12 +4,13 @@ import Cookies from 'js-cookie';
 interface CartItem {
   productId: string;
   quantity: number;
+  price?: number; // Lägg till pris för varje produkt i CartItem
 }
 
-interface Product {
-  title: string;
-  price: number;
-}
+// interface Product {
+//   title: string;
+//   price: number;
+// }
 
 interface CartContextProps {
   cart: CartItem[];
@@ -26,30 +27,45 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
   useEffect(() => {
     Cookies.set('cart', JSON.stringify(cart), { sameSite: 'strict' });
 
-    const newTotal = cart.reduce((total, item) => {
-      const productPrice = getProductPrice(item.productId);
-      return total + productPrice * item.quantity;
-    }, 0);
+    const newTotal = cart.reduce((total, item) => (item.price ? total + item.price * item.quantity : total), 0);
+
 
     setTotal(newTotal);
   }, [cart]);
 
+  // const getProductPrice = async (productId: string): Promise<number> => {
+  //   try {
+  //     const response = await fetch(`http://localhost:3000/api/products/${productId}`);
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`);
+  //     }
+  //     const data: Product = await response.json();
+  //     return data.price;
+  //   } catch (error) {
+  //     console.error('Error fetching product price:', error);
+  //     return 0;
+  //   }
+  // };
+
   const addToCart = useCallback(
     (productId: string) => {
       setCart((prevCart) => {
-        const existingCartItem = prevCart.find((item) => item.productId === productId);
-
-        if (existingCartItem) {
-          return prevCart.map((item) =>
-            item.productId === productId ? { ...item, quantity: item.quantity + 1 } : item
-          );
+        const existingCartItemIndex = prevCart.findIndex((item) => item.productId === productId);
+  
+        if (existingCartItemIndex !== -1) {
+          // Om produkten redan finns i varukorgen, öka antalet
+          const updatedCart = [...prevCart];
+          updatedCart[existingCartItemIndex].quantity += 1;
+          return updatedCart;
         } else {
+          // Om produkten inte finns i varukorgen, lägg till den
           return [...prevCart, { productId, quantity: 1 }];
         }
       });
     },
     [setCart]
   );
+  
 
   return <CartContext.Provider value={{ cart, addToCart, total }}>{children}</CartContext.Provider>;
 }
@@ -60,14 +76,6 @@ const useCart = () => {
     throw new Error('useCart must be used within a CartProvider');
   }
   return context;
-};
-
-const getProductPrice = (productId: string): number => {
-  const staticProductPrices: Record<string, number> = {
-    productId: 200,
-  };
-
-  return staticProductPrices[productId] || 0;
 };
 
 const loadCartFromCookie = (): CartItem[] => {
