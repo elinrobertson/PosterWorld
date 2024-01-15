@@ -33,20 +33,8 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
     setTotal(newTotal);
   }, [cart]);
 
-  // const getProductPrice = async (productId: string): Promise<number> => {
-  //   try {
-  //     const response = await fetch(`http://localhost:3000/api/products/${productId}`);
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //     }
-  //     const data: Product = await response.json();
-  //     return data.price;
-  //   } catch (error) {
-  //     console.error('Error fetching product price:', error);
-  //     return 0;
-  //   }
-  // };
 
+  // Funktion för att lägga till produkter i varukorgen, memoized med useCallback
   const addToCart = useCallback(
     (productId: string) => {
       setCart((prevCart) => {
@@ -66,10 +54,11 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
     [setCart]
   );
   
-
+  // Returnera provider-komponenten med värdet av varukorgs-tillståndet
   return <CartContext.Provider value={{ cart, addToCart, total }}>{children}</CartContext.Provider>;
 }
 
+// En hook för att använda varukorgs-tillståndet
 const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -78,6 +67,7 @@ const useCart = () => {
   return context;
 };
 
+// Funktion för att ladda varukorgen från cookies
 const loadCartFromCookie = (): CartItem[] => {
   const savedCart = Cookies.get('cart');
   return savedCart ? JSON.parse(savedCart) : [];
