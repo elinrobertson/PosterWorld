@@ -121,6 +121,11 @@
     align-items: center;
 }
 
+.cart-icon:hover, .person-icon:hover {
+    scale: 1.1;
+    transition: ease 0.3s all;
+}
+
 .cart-item-count {
     background-color: #89B9AD;
     font-size: 0.7rem;
@@ -132,4 +137,10 @@
     right: -0.5rem;
     z-index: 1;
 }
+
+.person-icon {
+    text-decoration: none;
+    color: inherit;
+  }
+  
 

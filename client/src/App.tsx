@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Main from './components/Main/Main';
 import { CartProvider } from './context/CartContext';
-
-import './main.css';
+import UserProvider from './context/UserContext';
 import Footer from './components/Footer/Footer';
+import './main.css';
 
 const App: React.FC = () => {
   return (
     <Router>
+      <UserProvider>
       <CartProvider>
         {/* <div> */}
           <Navbar />
@@ -19,6 +20,7 @@ const App: React.FC = () => {
           <Footer />
         {/* </div> */}
       </CartProvider>
+      </UserProvider>
     </Router>
   );
 };

@@ -1,0 +1,48 @@
+.form-wrapper {
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8rem;
+}
+
+.newuser-div {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    text-align: center;
+}
+.newUser-div h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.newUser-div a:hover {
+    color: #545454;
+}
+
+#basic {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 800px;
+}
+
+#basic h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+#basic>* {
+    width: 80%;
+}

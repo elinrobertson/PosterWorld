@@ -92,7 +92,9 @@ const Navbar: React.FC = () => {
           </ul>
         </div>
         <div className="icons-container">
-          <GoPerson />
+        <NavLink to="/login" className="person-icon">
+            <GoPerson />
+          </NavLink>
           <motion.div className="cart-icon" onClick={showDrawer}>
             {isCartEmpty ? <HiOutlineShoppingBag /> : <HiShoppingBag />}
             {cartItemCount > 0 && <div className="cart-item-count">{cartItemCount}</div>}
