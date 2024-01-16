@@ -18,6 +18,13 @@ interface UserContextProps {
   login: (credentials: Credentials) => void;
 }
 
+export interface UserRegistrationData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 export const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 function UserProvider({ children }: PropsWithChildren<ReactNode>) {
@@ -45,8 +52,33 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
     }
   }
 
+  async function register(userData: UserRegistrationData) {
+    try {
+      const response = await fetch("http://localhost:3000/api/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        // Optionally, you can handle the registration success here
+        const registeredUser: User = await response.json();
+        console.log("Användaren har registrerats:", registeredUser);
+        // You might want to automatically log in the user after registration
+        login({ email: userData.email, password: userData.password });
+      } else {
+        // Handle registration failure
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   return (
-    <UserContext.Provider value={{ login, loggedinUser }}>
+    <UserContext.Provider value={{ login, register, loggedinUser }}>
       {children}
     </UserContext.Provider>
   );

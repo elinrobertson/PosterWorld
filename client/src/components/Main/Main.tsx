@@ -4,6 +4,7 @@ import Home from '../Home/Home';
 import CategoryPage from '../CategoryPage/CategoryPage';
 import ProductDetail from "../ProductDetail/ProductDetail";
 import Login from "../Login/Login";
+import Register from "../Register/Register";
 
 const Main: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const Main: React.FC = () => {
         <Route path="/:category/*" element={<CategoryPage />} />
         <Route path="/:category/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         {/* Lägg till fler rutter här */}
       </Routes>
     </div>

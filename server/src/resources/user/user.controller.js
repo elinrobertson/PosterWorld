@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 // Registrera användare
 const registerUser = async(req,res, next) => {
     try {
-        const existingUser = await UserModel.findOne({ username: req.body.username })
+        const existingUser = await UserModel.findOne({ email: req.body.email })
         if(existingUser) {
             return res.status(409).json("User already exists");
         }
