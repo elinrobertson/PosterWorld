@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { HiOutlineShoppingBag, HiShoppingBag } from 'react-icons/hi2';
-import { GoPerson } from 'react-icons/go';
+import { GoPerson, GoPersonFill } from 'react-icons/go';
 import { IoEarthOutline } from 'react-icons/io5';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
+import { UserContext } from '../../context/UserContext';
 import CartDrawer from '../CartDrawer/CartDrawer';
 import './Navbar.css';
 
@@ -16,6 +17,9 @@ interface Category {
 
 const Navbar: React.FC = () => {
   const { cart } = useCart();
+  const userContext = useContext(UserContext);
+  const loggedinUser = userContext?.loggedinUser; // Check if userContext is defined
+
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -75,7 +79,7 @@ const Navbar: React.FC = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Link
+                <NavLink
                   to={`/${category.title.toLowerCase()}`}
                   onClick={() => {
                     console.log('Before:', activeCategory);
@@ -86,15 +90,21 @@ const Navbar: React.FC = () => {
                   }}
                 >
                   {category.title}
-                </Link>
+                </NavLink>
               </motion.li>
             ))}
           </ul>
         </div>
         <div className="icons-container">
-        <NavLink to="/login" className="person-icon">
-            <GoPerson />
-          </NavLink>
+          {loggedinUser ? (
+            <NavLink to="/profile" className="person-icon">
+              <GoPersonFill style={{ color: '#89B9AD' }}/>
+            </NavLink>
+          ) : (
+            <NavLink to="/login" className="person-icon">
+              <GoPerson />
+            </NavLink>
+          )}
           <motion.div className="cart-icon" onClick={showDrawer}>
             {isCartEmpty ? <HiOutlineShoppingBag /> : <HiShoppingBag />}
             {cartItemCount > 0 && <div className="cart-item-count">{cartItemCount}</div>}

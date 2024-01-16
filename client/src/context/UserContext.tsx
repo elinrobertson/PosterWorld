@@ -1,5 +1,4 @@
-// UserContext.tsx
-import { createContext, PropsWithChildren, useContext, useState, ReactNode } from "react";
+import { createContext, PropsWithChildren, useState, ReactNode } from "react";
 import { useNavigate } from "react-router";
 
 export interface User {
@@ -9,13 +8,14 @@ export interface User {
   email: string;
 }
 
-interface UserContextProps {
-  login: (credentials: Credentials) => void;
-}
-
-interface Credentials {
+export interface Credentials {
   email: string;
   password: string;
+}
+
+interface UserContextProps {
+  loggedinUser: User | null;
+  login: (credentials: Credentials) => void;
 }
 
 export const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -46,7 +46,7 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
   }
 
   return (
-    <UserContext.Provider value={{ login }}>
+    <UserContext.Provider value={{ login, loggedinUser }}>
       {children}
     </UserContext.Provider>
   );

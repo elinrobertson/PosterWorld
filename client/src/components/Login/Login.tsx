@@ -4,9 +4,16 @@ import { Link } from 'react-router-dom';
 import "./Login.css"
 
 const Login = () => {
-  const { login } = useContext(UserContext);
+  const userContext = useContext(UserContext);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  if (!userContext) {
+    return <div>Loader...</div>;
+  }
+
+  const { login } = userContext;
 
   const handleLogin = () => {
     const credentials: Credentials = {
@@ -15,8 +22,6 @@ const Login = () => {
     };
     login(credentials);
   }
-  
-
 
   return (
     <div className='login-wrapper'>
@@ -26,11 +31,12 @@ const Login = () => {
         <input type="password" placeholder='Lösenord' onChange={(e) => setPassword(e.target.value)}/>
         <button onClick={handleLogin}>Logga in</button>
         <div className="text-wrapper">
-        <p>Inte medlem? Skapa konto</p><span><Link to="/register">här</Link></span>
+          <p>Inte medlem? Skapa konto</p>
+          <span><Link to="/register">här</Link></span>
         </div>
       </div>
     </div>
   )
 }
 
-export default Login
+export default Login;
