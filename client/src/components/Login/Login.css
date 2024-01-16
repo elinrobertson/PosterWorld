@@ -1,39 +1,10 @@
-.form-wrapper {
-    background-color: pink;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.login-wrapper {
+    height: 70vh;
     margin-top: 8rem;
+    /* background-color: pink; */
 }
 
-.newuser-div {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    text-align: center;
-}
-.newUser-div h3 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-.newUser-div a:hover {
-    color: #545454;
-}
-
-#basic {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 800px;
-}
-
-#basic h3 {
+.login-wrapper h3 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,6 +14,65 @@
     margin-bottom: 1.5rem;
 }
 
-#basic>* {
-    width: 80%;
+.form-wrapper {
+    /* background-color: orange; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 23rem;
+    margin-bottom: 8rem;
+}
+
+.form-wrapper input {
+    height: 2.5rem;
+    width: 20rem;
+    margin: 0.5rem 0;
+    border-radius: 5px;
+    border: 0.5px grey solid;
+    padding-left: 5px;
+}
+
+::placeholder {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 14px;
+    pointer-events: none;
+    letter-spacing: 1px;
+}
+
+.form-wrapper button {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.form-wrapper p {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.text-wrapper {
+    display: flex;
+    /* background-color: orange; */
+}
+
+.text-wrapper span {
+    font-size: 14px;
+    text-transform: none;
+    text-decoration: underline;
+    letter-spacing: 0;
+    margin-left: 2px;
+    font-weight: 400;
+}
+
+.text-wrapper span:hover {
+    cursor: pointer;
+}
+
+.text-wrapper a {
+    text-decoration: none;
+    color: inherit;
 }

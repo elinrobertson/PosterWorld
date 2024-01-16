@@ -1,4 +1,5 @@
-import React, { createContext, useState, PropsWithChildren } from "react";
+// UserContext.tsx
+import { createContext, PropsWithChildren, useContext, useState, ReactNode } from "react";
 import { useNavigate } from "react-router";
 
 export interface User {
@@ -8,18 +9,18 @@ export interface User {
   email: string;
 }
 
-interface UserContext {
+interface UserContextProps {
   login: (credentials: Credentials) => void;
 }
 
-export interface Credentials {
+interface Credentials {
   email: string;
   password: string;
 }
 
-export const UserContext = createContext<UserContext | undefined>(undefined);
+export const UserContext = createContext<UserContextProps | undefined>(undefined);
 
-function UserProvider({ children }: PropsWithChildren<React.ReactNode>) {
+function UserProvider({ children }: PropsWithChildren<ReactNode>) {
   const [loggedinUser, setLoggedinUser] = useState<User | null>(null);
   const navigate = useNavigate();
 

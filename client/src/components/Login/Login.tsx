@@ -1,61 +1,36 @@
-import { useContext } from "react"
-import { Checkbox, Form, Input } from 'antd';
-// import { NavLink } from "react-router-dom";
-import { Credentials, UserContext } from "../../context/UserContext";
+import { useContext, useState } from 'react';
+import { Credentials, UserContext } from '../../context/UserContext';
+import { Link } from 'react-router-dom';
 import "./Login.css"
 
 const Login = () => {
-  const { login } = useContext(UserContext)!;
-  const onFinishFailed = (errorInfo: object) => {
-    console.log('Failed:', errorInfo);
-  };
+  const { login } = useContext(UserContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    const credentials: Credentials = {
+      email,
+      password,
+    };
+    login(credentials);
+  }
+  
+
 
   return (
-    <div className="form-wrapper">
-      
-    <Form
-      name="basic"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      style={{ maxWidth: 600 }}
-      initialValues={{ remember: true }}
-      onFinish={(values: Credentials) => login(values)}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      {/* <div className="newuser-div">
-        <h3>Är du ny?</h3>
-        <NavLink to={"/createuser"}>Skapa nytt konto här</NavLink>
-      </div> */}
+    <div className='login-wrapper'>
       <h3>Logga in</h3>
-      <Form.Item
-        label="E-mail"
-        name="email"
-        rules={[{ required: true, message: 'Skriv in ditt användarnamn!' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Lösenord"
-        name="password"
-        rules={[{ required: true, message: 'Skriv in ditt lösenord!' }]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-        <Checkbox>Kom ihåg mig</Checkbox>
-      </Form.Item>
-
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <button>
-          Logga in
-        </button>
-      </Form.Item>
-    </Form>
+      <div className="form-wrapper">
+        <input type="text" placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
+        <input type="password" placeholder='Lösenord' onChange={(e) => setPassword(e.target.value)}/>
+        <button onClick={handleLogin}>Logga in</button>
+        <div className="text-wrapper">
+        <p>Inte medlem? Skapa konto</p><span><Link to="/register">här</Link></span>
+        </div>
+      </div>
     </div>
   )
-};
+}
 
 export default Login
