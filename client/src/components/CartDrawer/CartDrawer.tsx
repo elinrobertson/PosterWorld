@@ -4,7 +4,7 @@ import { useCart } from '../../context/CartContext';
 import { GoTrash } from "react-icons/go";
 import "./CartDrawer.css"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
-
+import { motion } from "framer-motion"
 
 interface Product {
   productId: string;
@@ -81,6 +81,11 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
           <div className="total-price">
             <p>Totalt pris: {totalPrice} kr</p>
           </div>
+          <motion.button 
+            className='checkout-button'
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}>Gå vidare till kassan
+          </motion.button>
         </>
       )}
     </Drawer>

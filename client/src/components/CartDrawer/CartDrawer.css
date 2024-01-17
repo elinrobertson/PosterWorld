@@ -67,4 +67,12 @@
     font-weight: 500;
     font-size: 1.1rem;
   }
+
+  .checkout-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+  }
   
