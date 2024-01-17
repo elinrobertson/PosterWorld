@@ -4,7 +4,6 @@ const productRouter = express.Router();
 
 // Logga att routen träffas
 productRouter.get("", async (req, res) => {
-    console.log("Route is hit!");
     try {
         const products = await getProducts(req, res);
         res.status(200).json(products);

@@ -7,6 +7,8 @@ import { motion } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
 import { UserContext } from '../../context/UserContext';
 import CartDrawer from '../CartDrawer/CartDrawer';
+import { Dropdown } from 'antd';
+import type { MenuProps } from 'antd';
 import './Navbar.css';
 
 interface Category {
@@ -18,12 +20,18 @@ interface Category {
 const Navbar: React.FC = () => {
   const { cart } = useCart();
   const userContext = useContext(UserContext);
-  const loggedinUser = userContext?.loggedinUser; // Check if userContext is defined
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [drawerVisible, setDrawerVisible] = useState(false);
 
+  if (!userContext) {
+    return <div>Loading...</div>;
+  }
+
+  const { loggedinUser, logout } = userContext;
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -33,15 +41,18 @@ const Navbar: React.FC = () => {
         }
 
         const data = await response.json();
-        console.log('Fetched categories:', data); 
+        console.log('Fetched categories:', data);
         setCategories(data);
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     };
 
-    fetchCategories();
-  }, []);
+    // Only fetch categories on mount
+    if (categories.length === 0) {
+      fetchCategories();
+    }
+  }, [categories]);  // Beroendearray uppdaterat för att köra useEffect varje gång categories ändras
 
   const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const isCartEmpty = cartItemCount === 0;
@@ -53,6 +64,23 @@ const Navbar: React.FC = () => {
   const closeDrawer = () => {
     setDrawerVisible(false);
   };
+
+  const handleLogout = async () => {
+    console.log("Before logout:", loggedinUser);
+  
+    // Anropa logout från UserContext
+    await logout();
+  
+    console.log("After logout:", loggedinUser);
+  };
+
+  const items: MenuProps['items'] = [
+    {
+      key: 'logout',
+      label: 'Logga ut',
+      onClick: handleLogout, // Använd handleLogout-funktionen här
+    },
+  ];
 
   return (
     <div className="navbar-wrapper">
@@ -97,9 +125,11 @@ const Navbar: React.FC = () => {
         </div>
         <div className="icons-container">
           {loggedinUser ? (
-            <NavLink to="/profile" className="person-icon">
-              <GoPersonFill style={{ color: '#89B9AD' }}/>
-            </NavLink>
+            <Dropdown menu={{ items }} trigger={['click']}>
+              <NavLink to="#" className="person-icon">
+                <GoPersonFill style={{ color: '#89B9AD' }}/>
+              </NavLink>
+            </Dropdown>
           ) : (
             <NavLink to="/login" className="person-icon">
               <GoPerson />

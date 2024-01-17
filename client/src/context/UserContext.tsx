@@ -15,7 +15,9 @@ export interface Credentials {
 
 interface UserContextProps {
   loggedinUser: User | null;
-  login: (credentials: Credentials) => void;
+  login: (credentials: Credentials) => Promise<void>;
+  register: (userData: UserRegistrationData) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export interface UserRegistrationData {
@@ -31,7 +33,7 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
   const [loggedinUser, setLoggedinUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
-  async function login(credentials: Credentials) {
+  async function login(credentials: Credentials): Promise<void> {
     try {
       const response = await fetch("http://localhost:3000/api/users/login", {
         method: "POST",
@@ -52,7 +54,7 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
     }
   }
 
-  async function register(userData: UserRegistrationData) {
+  async function register(userData: UserRegistrationData):Promise<void> {
     try {
       const response = await fetch("http://localhost:3000/api/users/register", {
         method: "POST",
@@ -77,9 +79,41 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
     }
   }
 
+  async function logout():Promise<void> {
+    try {
+      console.log("Logging out user:", loggedinUser);
+  
+      if (loggedinUser) {
+        const response = await fetch("http://localhost:3000/api/users/logout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loggedinUser),
+        });
+  
+        if (response.ok) {
+          setLoggedinUser(null);
+          console.log("User logged out successfully");
+        } else {
+          console.error("Failed to log out user. Server responded with:", response.status);
+        }
+      } else {
+        console.log("No user is logged in.");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  }
+  
+  
+  
+  
+  
+
   return (
-    <UserContext.Provider value={{ login, register, loggedinUser }}>
-      {children}
+    <UserContext.Provider value={{ login, logout, register, loggedinUser }}>
+    {children}
     </UserContext.Provider>
   );
 }

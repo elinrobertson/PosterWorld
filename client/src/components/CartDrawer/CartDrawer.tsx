@@ -64,7 +64,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
           {products.map((product, index) => (
             <div className="drawer-info" key={index}>
               <img src={product.images[0]} alt={product.title} />
-              <div className="prodict-info">
+              <div className="product-info">
                 <p id='title'>{product.title}</p>
                 <p>Antal: {product.quantity}</p>
                 <p id='price-info'>Pris: {product.price * product.quantity} kr</p>
