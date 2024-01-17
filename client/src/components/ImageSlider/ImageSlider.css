@@ -3,14 +3,6 @@
   /* background-color: pink; */
 }
 
-/* .imageslider-container h2 {
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 500;
-  text-align: center;
-} */
-
 .image-wrapper {
   width: 100vw;
   display: flex;
@@ -34,12 +26,13 @@
 
 .imageslider-arrows {
   width: 100%;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
   position: absolute;
+  /* background-color: orange; */
 }
 
 .arrow {

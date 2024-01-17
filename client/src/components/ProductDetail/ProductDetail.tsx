@@ -7,6 +7,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useCart } from '../../context/CartContext';
 // import ImageSlider from '../ImageSlider/ImageSlider';
 import "./ProductDetail.css";
+import ImageSlider from '../ImageSlider/ImageSlider';
 
 interface ProductDetailProps {}
 
@@ -56,6 +57,7 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
   };
 
   return (
+    <>
     <div className="productdetail-wrapper">
       {product ? (
         <>
@@ -110,7 +112,11 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
         <p>Loading...</p>
       )}
     </div>
-    
+    <div className='productdetail-slider'>
+      <h3>Vi rekommenderar</h3>
+      <ImageSlider />
+    </div>
+    </>
   );
 };
 
