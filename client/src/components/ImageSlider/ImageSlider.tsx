@@ -8,6 +8,7 @@ interface Product {
   _id: string;
   title: string;
   images: string[];
+  category: string;
 }
 
 const ImageSlider = () => {
@@ -61,6 +62,11 @@ const ImageSlider = () => {
   // Se till att alltid visa 6 bilder samtidigt
   const visibleProducts = sliderImages.slice(currentIndex, currentIndex + 6).concat(sliderImages.slice(0, Math.max(0, 6 - (sliderImages.length - currentIndex))));
 
+  // Uppdaterad funktion för att hantera klick på bild
+  const handleImageClick = (productId: string, categoryName: string) => {
+    navigate(`/${categoryName}/${productId}`);
+  };
+
   return (
     <div className='imageslider-container'>
       <div className='image-wrapper'>
@@ -72,7 +78,7 @@ const ImageSlider = () => {
                   key={index}
                   src={image}
                   alt={`${product.title} - Image ${index + 1}`}
-                  onClick={() => navigate(`/products/${product._id}`)}
+                  onClick={() => handleImageClick(product._id, product.category)}
                 />
               )
             ))}

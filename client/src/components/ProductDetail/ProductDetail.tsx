@@ -5,9 +5,8 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-i
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { IoCloseOutline } from "react-icons/io5";
 import { useCart } from '../../context/CartContext';
-// import ImageSlider from '../ImageSlider/ImageSlider';
-import "./ProductDetail.css";
 import ImageSlider from '../ImageSlider/ImageSlider';
+import "./ProductDetail.css";
 
 interface ProductDetailProps {}
 
@@ -53,7 +52,7 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
   };
 
   const handleGoBack = () => {
-    navigate(-1);  // Gå tillbaka ett steg i historiken
+    navigate(-1); 
   };
 
   return (
