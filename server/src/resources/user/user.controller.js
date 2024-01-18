@@ -36,14 +36,15 @@ const loginUser = async (req, res, next) => {
         user._id = existingUser._id;
         delete user.password;
 
-        if (req.session && req.session.userId) {
-            console.log("User already logged in:", req.session.email);
+        if (req.session && !req.session._id) {
+            req.session._id = existingUser._id;
+            // andra sessionattribut kan sättas här
+            console.log("User logged in:", user.email);
             return res.status(200).json(user);
         }
 
-        req.session = user;
-        res.status(200).json(user);
-        console.log("User logged in:", user.email);
+        console.log("User already logged in:", req.session.email);
+        return res.status(200).json(user);
     } catch (error) {
         console.error("Error during login:", error);
         return res.status(500).json("Internal Server Error");
@@ -51,9 +52,11 @@ const loginUser = async (req, res, next) => {
 };
 
 
+
 //Logga ut användare
 const logoutUser = async (req, res, next) => {
     try {
+        console.log("Session before logout:", req.session);
         if (!req.session._id) {
             console.log("User not logged in. Cannot logout.");
             return res.status(400).json("Cannot logout when you are not logged in");
@@ -61,7 +64,16 @@ const logoutUser = async (req, res, next) => {
 
         console.log("Logging out user:", req.session.email);
 
-        req.session = null;
+        // req.session = null;
+        console.log("Session before logout:", req.session);
+        req.session.destroy((err) => {
+            if (err) {
+                console.error("Error during logout:", err);
+                return res.status(500).json("Internal Server Error");
+            }
+            console.log("User logged out successfully");
+            res.status(204).json(null);
+        });
 
         console.log("User logged out successfully");
 

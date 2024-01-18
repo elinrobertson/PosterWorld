@@ -51,6 +51,7 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
       }
     } catch (error) {
       console.error("Error:", error);
+      setLoggedinUser(null); 
     }
   }
 
@@ -89,7 +90,9 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(loggedinUser),
+          body: JSON.stringify({
+            email: loggedinUser.email, 
+          }),
         });
   
         if (response.ok) {
