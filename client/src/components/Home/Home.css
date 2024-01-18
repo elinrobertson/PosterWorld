@@ -12,3 +12,33 @@ h3 {
 .imageslider-arrows {
     width: 77%; 
 }
+
+.inspo-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: orange; */
+  }
+
+.inspo-wrapper img {
+    width: 35%;
+    margin: 1rem;
+  }
+
+.first-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+}
+
+.second-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+}
+  
+
+
+  
+  
