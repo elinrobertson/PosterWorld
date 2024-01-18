@@ -4,6 +4,7 @@ const cookieSession = require("cookie-session");
 const productRouter = require("./resources/product/product.router");
 const categoryRouter = require("./resources/category/category.router");
 const userRouter = require("./resources/user/user.router");
+const checkoutRouter = require("./resources/checkout/checkout.router")
 const path = require('path'); 
 
 const app = express();
@@ -37,6 +38,7 @@ app.use((err, req, res, next) => {
 app.use("/api/products", productRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/users", userRouter)
+app.use("/api/checkout", checkoutRouter)
 
 app.use(express.static(path.join(__dirname, 'client')));
 
