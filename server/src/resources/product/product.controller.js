@@ -37,7 +37,7 @@ const getProductsById = async (req, res, next) => {
 const getProductByTitle = async (req, res, next) => {
     const title = req.params.title;
     try {
-        console.log("Requested title:", title);
+        // console.log("Requested title:", title);
 
         const product = await ProductModel.findOne({ title: title });
         if (product) {
