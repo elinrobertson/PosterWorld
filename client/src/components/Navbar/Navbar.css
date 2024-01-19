@@ -149,3 +149,36 @@
     letter-spacing: 1px;
   }
 
+  @media screen and (max-width: 820px) {
+    .logo-container h2 {
+        display: none; /* Göm texten inom h2 vid mindre skärmstorlekar */
+    }
+    
+    .logo-link {
+        display: flex;
+        justify-content: center; /* Centrera ikonen horisontellt */
+        align-items: center; /* Centrera ikonen vertikalt */
+    }
+
+    .logo-link span:nth-child(2) {
+        display: inline !important;
+        font-size: 1.5rem !important;
+        margin: 0 5px !important;
+    }
+    
+    .logo-link > span:first-child,
+    .logo-link > span:last-child {
+        display: none !important;
+    }
+
+    .links-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .links-container ul {
+        font-size: 0.9rem;
+        gap: 1rem;
+    }
+  }
+  

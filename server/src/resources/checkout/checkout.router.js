@@ -1,5 +1,5 @@
 const express = require("express")
-const { checkout, verify } = require("../controllers/checkout.controller")
+const { checkout, verify } = require("../checkout/checkout.controller")
 const checkoutRouter = express.Router()
 
 

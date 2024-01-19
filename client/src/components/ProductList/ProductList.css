@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 8rem;
+    margin-top: 6rem;
 }
 
 .productlist {
@@ -57,5 +57,15 @@
 
 .productlist-main button {
     margin: 1rem 0;
+}
+
+.category-description {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    word-wrap: wrap;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
 }
 

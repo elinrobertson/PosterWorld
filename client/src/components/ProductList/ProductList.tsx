@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import { motion } from "framer-motion";
-import "./ProductList.css"
+import "./ProductList.css";
 
 interface ProductInfo {
   _id: string;
@@ -13,22 +13,16 @@ interface ProductInfo {
   images: string[];
 }
 
-// interface Category {
-//   _id: string;
-//   title: string;
-//   description: string;
-// }
-
 interface ProductListProps {
   categoryName: string;
+  categoryDescription?: string;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
+const ProductList: React.FC<ProductListProps> = ({ categoryName, categoryDescription }) => {
   const [products, setProducts] = useState<ProductInfo[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  // const [category, setCategory] = useState<Category | null>(null);
 
   useEffect(() => {
     setProducts([]);
@@ -52,7 +46,6 @@ const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
       if (data.length === 0) {
         setHasMore(false);
       } else {
-        // Uppdatera produkterna endast om vi är på första sidan, annars lägg till nya produkter
         setProducts((prevProducts) => (currentPage === 1 ? data : [...prevProducts, ...data]));
         setCurrentPage((prevPage) => prevPage + 1);
       }
@@ -64,7 +57,6 @@ const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
   };
 
   const loadMore = () => {
-    // Ladda fler produkter endast om det inte pågår en laddning och det finns fler
     if (!loading && hasMore) {
       fetchProducts();
     }
@@ -73,7 +65,8 @@ const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
   return (
     <div>
       <div className="productlist-main">
-      <h3>{categoryName}</h3>
+        <h3>{categoryName}</h3>
+        <p className="category-description">{categoryDescription}</p>
         <ul className="productlist">
           {products.map((product, index) => (
             <li key={`${product._id}_${index}`}>
@@ -81,11 +74,15 @@ const ProductList: React.FC<ProductListProps> = ({ categoryName }) => {
             </li>
           ))}
         </ul>
-        {/* {loading && <p>Loading...</p>} */}
-        {hasMore && !loading && <motion.button 
-        onClick={loadMore}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}>Visa mer</motion.button>}
+        {hasMore && !loading && (
+          <motion.button
+            onClick={loadMore}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            Visa mer
+          </motion.button>
+        )}
       </div>
     </div>
   );
