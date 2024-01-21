@@ -89,6 +89,7 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
       if (loggedinUser) {
         Cookies.remove('user'); // Ta bort användarcookie
         setLoggedinUser(null);
+        navigate("/");
         console.log("Användaren har loggats ut");
       } else {
         console.log("Ingen användare är inloggad.");
