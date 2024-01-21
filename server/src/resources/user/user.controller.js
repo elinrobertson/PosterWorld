@@ -23,33 +23,24 @@ const registerUser = async(req,res, next) => {
 //Logga in användare
 const loginUser = async (req, res, next) => {
     try {
-        const existingUser = await UserModel.findOne({
-            email: req.body.email
-        }).select("+password");
-
-        if (!existingUser || !(await bcrypt.compare(req.body.password, existingUser.password))) {
-            console.log("Login failed for user:", req.body.email);
-            return res.status(401).json("Wrong username or password");
-        }
-
-        const user = existingUser.toJSON();
-        user._id = existingUser._id;
-        delete user.password;
-
-        if (req.session && !req.session._id) {
-            req.session._id = existingUser._id;
-            // andra sessionattribut kan sättas här
-            console.log("User logged in:", user.email);
-            return res.status(200).json(user);
-        }
-
-        console.log("User already logged in:", req.session.email);
-        return res.status(200).json(user);
+      const existingUser = await UserModel.findOne({
+        email: req.body.email
+      }).select("+password");
+  
+      if (req.session && !req.session._id) {
+        req.session._id = existingUser._id;
+        req.session.email = existingUser.email;
+        console.log("User logged in:", existingUser.email);
+        return res.status(200).json(existingUser);
+      }
+  
+      console.log("User already logged in:", req.session.email);
+      return res.status(200).json(existingUser);
     } catch (error) {
-        console.error("Error during login:", error);
-        return res.status(500).json("Internal Server Error");
+      console.error("Error during login:", error);
+      return res.status(500).json("Internal Server Error");
     }
-};
+  };
 
 
 
@@ -57,32 +48,30 @@ const loginUser = async (req, res, next) => {
 const logoutUser = async (req, res, next) => {
     try {
         console.log("Session before logout:", req.session);
+      
         if (!req.session._id) {
-            console.log("User not logged in. Cannot logout.");
-            return res.status(400).json("Cannot logout when you are not logged in");
+          console.log("User not logged in. Cannot logout.");
+          return res.status(400).json("Cannot logout when you are not logged in");
         }
-
+      
         console.log("Logging out user:", req.session.email);
-
-        // req.session = null;
-        console.log("Session before logout:", req.session);
+      
         req.session.destroy((err) => {
-            if (err) {
-                console.error("Error during logout:", err);
-                return res.status(500).json("Internal Server Error");
-            }
-            console.log("User logged out successfully");
-            res.status(204).json(null);
+          if (err) {
+            console.error("Error during logout:", err);
+            return res.status(500).json("Internal Server Error");
+          }
+          console.log("User logged out successfully");
+          res.status(204).json(null);
         });
-
+      
         console.log("User logged out successfully");
-
-        res.status(204).json(null);
-    } catch (error) {
+      } catch (error) {
         console.error("Error during logout:", error);
         res.status(500).json("Internal Server Error");
-    }
-};
+      }
+  };
+  
 
   
 

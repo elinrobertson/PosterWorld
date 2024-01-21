@@ -1,5 +1,6 @@
 import { createContext, PropsWithChildren, useState, ReactNode } from "react";
 import { useNavigate } from "react-router";
+import Cookies from 'js-cookie';
 
 export interface User {
   _id: string;
@@ -47,15 +48,16 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
         const user: User = await response.json();
         setLoggedinUser(user);
         console.log("Användaren har loggats in:", user);
-        navigate("/"); // Redirect to home page after successful login
+        Cookies.set('user', JSON.stringify(user), { expires: 7 }); // Sätt användarcookie
+        navigate("/"); // Omdirigera till startsidan efter lyckad inloggning
       }
     } catch (error) {
-      console.error("Error:", error);
-      setLoggedinUser(null); 
+      console.error("Fel:", error);
+      setLoggedinUser(null);
     }
   }
 
-  async function register(userData: UserRegistrationData):Promise<void> {
+  async function register(userData: UserRegistrationData): Promise<void> {
     try {
       const response = await fetch("http://localhost:3000/api/users/register", {
         method: "POST",
@@ -66,57 +68,39 @@ function UserProvider({ children }: PropsWithChildren<ReactNode>) {
       });
 
       if (response.ok) {
-        // Optionally, you can handle the registration success here
+        // Valfritt: hantera registreringssuccé här
         const registeredUser: User = await response.json();
         console.log("Användaren har registrerats:", registeredUser);
-        // You might want to automatically log in the user after registration
+        // Du kan automatiskt logga in användaren efter registreringen
         login({ email: userData.email, password: userData.password });
       } else {
-        // Handle registration failure
-        console.error("Registration failed");
+        // Hantera registreringsfel
+        console.error("Registrering misslyckades");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Fel:", error);
     }
   }
 
-  async function logout():Promise<void> {
+  async function logout(): Promise<void> {
     try {
-      console.log("Logging out user:", loggedinUser);
-  
+      console.log("Loggar ut användaren:", loggedinUser);
+
       if (loggedinUser) {
-        const response = await fetch("http://localhost:3000/api/users/logout", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: loggedinUser.email, 
-          }),
-        });
-  
-        if (response.ok) {
-          setLoggedinUser(null);
-          console.log("User logged out successfully");
-        } else {
-          console.error("Failed to log out user. Server responded with:", response.status);
-        }
+        Cookies.remove('user'); // Ta bort användarcookie
+        setLoggedinUser(null);
+        console.log("Användaren har loggats ut");
       } else {
-        console.log("No user is logged in.");
+        console.log("Ingen användare är inloggad.");
       }
     } catch (error) {
-      console.error("Error during logout:", error);
+      console.error("Fel vid utloggning:", error);
     }
   }
-  
-  
-  
-  
-  
 
   return (
     <UserContext.Provider value={{ login, logout, register, loggedinUser }}>
-    {children}
+      {children}
     </UserContext.Provider>
   );
 }
