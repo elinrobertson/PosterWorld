@@ -2,7 +2,7 @@
 import Hero from '../Hero/Hero';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import "./Home.css"
-import { inspo1, inspo2, inspo3, inspo4 } from '../../assets/HeroImages';
+import { inspo1, inspo2, inspo3, inspo4 } from '../../assets/Images';
 
 
 const Home = () => {

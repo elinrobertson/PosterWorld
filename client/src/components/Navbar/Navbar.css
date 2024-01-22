@@ -42,25 +42,31 @@
     font-size: 1.6rem;
 }
 
-.logo-container h2, span {
+.logo-container img {
+    width: 17rem;
+    display: flex;
+    align-items: center;
+}
+
+/* .logo-container h2, span {
     color: black;
     font-size: 1.8rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 600;
-}
+} */
 
-.logo-link span {
+/* .logo-link span {
     font-weight: 300;
-}
+} */
 
 
-.logo-link {
+/* .logo-link {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: black; 
-}
+} */
 
 .links-container {
     display: flex;

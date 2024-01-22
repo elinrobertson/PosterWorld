@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { hero1, hero2, hero3 } from '../../assets/HeroImages';
+import { hero1, hero2, hero3 } from '../../assets/Images';
 import "./Hero.css";
 
 interface Slide {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { HiOutlineShoppingBag, HiShoppingBag } from 'react-icons/hi2';
 import { GoPerson, GoPersonFill } from 'react-icons/go';
-import { IoEarthOutline } from 'react-icons/io5';
+// import { IoEarthOutline } from 'react-icons/io5';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
@@ -9,6 +9,7 @@ import { UserContext } from '../../context/UserContext';
 import CartDrawer from '../CartDrawer/CartDrawer';
 import { Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
+import { logga } from '../../assets/Images';
 import './Navbar.css';
 
 interface Category {
@@ -91,10 +92,8 @@ const Navbar: React.FC = () => {
         <div className="logo-container">
           <h2>
             <NavLink to="/" className="logo-link">
-              Poster
-              <span>W</span>
-              <IoEarthOutline style={{ color: '#89B9AD' }} />
-              <span>rld</span>
+              <img src={logga} alt="" />
+              
             </NavLink>
           </h2>
         </div>
