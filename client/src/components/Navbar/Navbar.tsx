@@ -73,6 +73,7 @@ const Navbar: React.FC = () => {
     await logout();
   
     console.log("After logout:", loggedinUser);
+    window.scrollTo(0, 0);
   };
 
   const items: MenuProps['items'] = [

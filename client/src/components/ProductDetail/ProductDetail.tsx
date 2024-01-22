@@ -37,6 +37,10 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
     fetchProduct();
   }, [id]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const scroll = (direction: 'left' | 'right') => {
     if (direction === 'left') {
       setCurrentSlide((prevSlide) => (prevSlide === 0 ? product.images.length - 1 : prevSlide - 1));
