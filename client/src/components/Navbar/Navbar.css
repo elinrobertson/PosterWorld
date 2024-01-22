@@ -49,13 +49,13 @@
     align-items: center;
 }
 
-/* .logo-container h2, span {
+.logo-container h2, span {
     color: black;
     font-size: 1.8rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 600;
-} */
+}
 
 /* .logo-link span {
     font-weight: 300;
