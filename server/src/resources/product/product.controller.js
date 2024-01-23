@@ -25,14 +25,24 @@ const getProductsByCategory = async (req, res, next) => {
 };
 
 //Hämtar produkter efter ID
-const getProductsById = async (req, res, next) => {
-    const products = await ProductModel.findOne({_id:req.params.id})
-    if (products) {
-        res.status(200).json(products); 
-    } else {
-        res.status(404).json(400);
+async function getProductsById(req, res, next) {
+    try {
+        // Här lägger du till en logg för att se vad som returneras från findById
+        const product = await ProductModel.findById(req.params.id);
+        console.log("Result from ProductModel.findById:", product);
+
+        if (!product) {
+            return res.status(404).json({ error: "Produkten kunde inte hittas." });
+        }
+
+        return res.status(200).json(product);
+    } catch (error) {
+        console.error('Fel vid hämtning av produkt från databasen:', error.message);
+        return res.status(500).json({ error: "Ett fel uppstod vid hämtning av produkten från databasen." });
     }
-};
+}
+
+
 
 const getProductByTitle = async (req, res, next) => {
     const title = req.params.title;

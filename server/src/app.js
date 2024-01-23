@@ -29,10 +29,13 @@ app.use(
   );
 
 // Loggningsmiddleware för att visa detaljerade felmeddelanden
+
 app.use((err, req, res, next) => {
-    console.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
-    next(err);
+  console.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+  console.error(err.stack); // Skriv ut stack trace
+  next(err);
 });
+
 
 // Routers
 app.use("/api/products", productRouter);
