@@ -6,6 +6,7 @@ const ProductSchema = new Schema(
         _id: { type: Types.ObjectId, auto: true },
         title: { type: String, required: true },
         price: { type: Number, required: true },
+        price_id: { type: String, required: true },
         category: { type: String, required: true },
         description: { type: String, required: true },
         inStock: { type: Number, required: true, default: 0 },
@@ -18,6 +19,7 @@ const ProductModel = models.product || model("product", ProductSchema);
 const productJoiSchema = Joi.object({
     title: Joi.string().strict().required(),
     price: Joi.number().strict().required(),
+    price_id: Joi.string().required(),
     category: Joi.string().required(),
     description: Joi.string().strict().required(),
     inStock: Joi.number().strict().required(),

@@ -11,6 +11,7 @@ interface Product {
   title: string;
   images: string[];
   price: number;
+  price_id: string,
   quantity: number;
 }
 

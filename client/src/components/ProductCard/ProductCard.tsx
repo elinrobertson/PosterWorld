@@ -7,6 +7,7 @@ interface ProductCardProps {
     _id: string;
     title: string;
     price: number;
+    price_id: string,
     category: string;
     description: string;
     inStock: number;
