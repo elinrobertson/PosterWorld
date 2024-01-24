@@ -53,26 +53,30 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
     fetchProducts();
   }, [cart]);
 
-async function handlePayment() {
-  try {
-    const response = await fetch('http://localhost:3000/api/checkout/create-checkout-session', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(products),
-    });
-
-    if(response.ok) {
-      const { url } = await response.json();
-      window.location.href = url;
-    } else {
-      // Hantera fel här
+  async function handlePayment() {
+    try {
+      // Filtrera bort produkter där productId är undefined
+      const validProducts = products.filter((product) => product.productId);
+  
+      const response = await fetch('http://localhost:3000/api/checkout/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(validProducts),
+      });
+  
+      if (response.ok) {
+        const { url } = await response.json();
+        window.location.href = url;
+      } else {
+        // Hantera fel här
+      }
+    } catch (error) {
+      // Hantera andra fel här
     }
-  } catch (error) {
-    // Hantera andra fel här
   }
-}
+  
 
   return (
     <Drawer title={"Varukorg"} placement="right" onClose={onClose} open={visible}>

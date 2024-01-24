@@ -4,15 +4,18 @@ import Cookies from 'js-cookie';
 interface CartItem {
   productId: string;
   quantity: number;
-  price?: number;
+  price: number; // Lägg till en standardvärde eller justera efter ditt behov
+  title: string; // Lägg till en standardvärde eller justera efter ditt behov
+  images: string[]; // Lägg till en standardvärde eller justera efter ditt behov
 }
 
 interface CartContextProps {
   cart: CartItem[];
-  addToCart: (productId: string) => void;
+  addToCart: (productId: string, title: string, images: string[], price: number) => void;
   removeFromCart: (productId: string) => void;
   increaseQuantity: (productId: string) => void;
-  decreaseQuantity: (productId: string) => void; 
+  decreaseQuantity: (productId: string) => void;
+  // clearCart: () => void;
   total: number;
 }
 
@@ -23,16 +26,21 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
+    console.log('CartProvider - cart:', cart);
+  
     Cookies.set('cart', JSON.stringify(cart), { sameSite: 'strict' });
-
-    const newTotal = cart.reduce((total, item) => (item.price ? total + item.price * item.quantity : total), 0);
-
+  
+    const newTotal = cart.reduce((total, item) => (item.price !== undefined ? total + item.price * item.quantity : total), 0);
+  
+    console.log('CartProvider - newTotal:', newTotal);
+  
     setTotal(newTotal);
   }, [cart]);
+  
+  
 
-  // Funktion för att lägga till produkter i varukorgen, memoized med useCallback
   const addToCart = useCallback(
-    (productId: string) => {
+    (productId: string, title: string, images: string[], price: number) => {
       setCart((prevCart) => {
         const existingCartItemIndex = prevCart.findIndex((item) => item.productId === productId);
 
@@ -41,7 +49,7 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
           updatedCart[existingCartItemIndex].quantity += 1;
           return updatedCart;
         } else {
-          return [...prevCart, { productId, quantity: 1 }];
+          return [...prevCart, { productId, quantity: 1, title, images, price }];
         }
       });
     },
@@ -92,6 +100,11 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
     },
     [setCart]
   );
+
+
+  // const clearCart = useCallback(() => {
+  //   setCart([]);
+  // }, [setCart]);
 
   // Returnera provider-komponenten med värdet av varukorgs-tillståndet
   return (
