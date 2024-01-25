@@ -34,6 +34,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const data: Product = await response.json();
+          console.log('Fetched product data:', data);
           return { ...data, quantity: item.quantity, productId: item.productId };
         });
 

@@ -42,10 +42,10 @@ const Navbar: React.FC = () => {
         }
 
         const data = await response.json();
-        console.log('Fetched categories:', data);
+        // console.log('Fetched categories:', data);
         setCategories(data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        // console.error('Error fetching categories:', error);
       }
     };
 
@@ -67,12 +67,12 @@ const Navbar: React.FC = () => {
   };
 
   const handleLogout = async () => {
-    console.log("Before logout:", loggedinUser);
+    // console.log("Before logout:", loggedinUser);
   
     // Anropa logout från UserContext
     await logout();
   
-    console.log("After logout:", loggedinUser);
+    // console.log("After logout:", loggedinUser);
     window.scrollTo(0, 0);
   };
 
