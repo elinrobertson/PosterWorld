@@ -4,15 +4,18 @@ import Cookies from 'js-cookie';
 interface CartItem {
   productId: string;
   quantity: number;
-  price?: number;
+  price: number;
+  price_id: string;
+  title: string; 
+  images: string[]; 
 }
 
 interface CartContextProps {
   cart: CartItem[];
-  addToCart: (productId: string) => void;
+  addToCart: (product: CartItem) => void;
   removeFromCart: (productId: string) => void;
   increaseQuantity: (productId: string) => void;
-  decreaseQuantity: (productId: string) => void; 
+  decreaseQuantity: (productId: string) => void;
   total: number;
 }
 
@@ -23,32 +26,35 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
+    console.log('CartProvider - cart:', cart);
+  
     Cookies.set('cart', JSON.stringify(cart), { sameSite: 'strict' });
-
-    const newTotal = cart.reduce((total, item) => (item.price ? total + item.price * item.quantity : total), 0);
-
+  
+    const newTotal = cart.reduce((total, item) => (item.price !== undefined ? total + item.price * item.quantity : total), 0);
+  
+    console.log('CartProvider - newTotal:', newTotal);
+  
     setTotal(newTotal);
   }, [cart]);
-
-  // Funktion för att lägga till produkter i varukorgen, memoized med useCallback
+  
   const addToCart = useCallback(
-    (productId: string) => {
+    (product: CartItem) => {
+      console.log('Adding to cart - Product ID:', product.productId, 'Price:', product.price);
       setCart((prevCart) => {
-        const existingCartItemIndex = prevCart.findIndex((item) => item.productId === productId);
-
+        const existingCartItemIndex = prevCart.findIndex((item) => item.productId === product.productId);
+  
         if (existingCartItemIndex !== -1) {
           const updatedCart = [...prevCart];
           updatedCart[existingCartItemIndex].quantity += 1;
           return updatedCart;
         } else {
-          return [...prevCart, { productId, quantity: 1 }];
+          return [...prevCart, product];
         }
       });
     },
     [setCart]
   );
 
-  // Funktion för att ta bort produkter från varukorgen, memoized med useCallback
   const removeFromCart = useCallback(
     (productId: string) => {
       setCart((prevCart) => prevCart.filter((item) => item.productId !== productId));
@@ -56,7 +62,6 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
     [setCart]
   );
 
-  // Funktion för att minska antalet av en produkt i varukorgen
   const increaseQuantity = useCallback(
     (productId: string) => {
       setCart((prevCart) => {
@@ -73,7 +78,6 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
     [setCart]
   );
 
-      // Funktion för att minska antalet av en produkt i varukorgen
   const decreaseQuantity = useCallback(
     (productId: string) => {
       setCart((prevCart) => {
@@ -83,7 +87,6 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
         if (existingCartItem && existingCartItem.quantity > 1) {
           existingCartItem.quantity -= 1;
         } else {
-          // Om antalet är 1 eller mindre, ta bort produkten från varukorgen
           return updatedCart.filter((item) => item.productId !== productId);
         }
 
@@ -93,7 +96,6 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
     [setCart]
   );
 
-  // Returnera provider-komponenten med värdet av varukorgs-tillståndet
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, total }}>
       {children}
@@ -101,7 +103,6 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
   );
 }
 
-// En hook för att använda varukorgs-tillståndet
 const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -110,7 +111,6 @@ const useCart = () => {
   return context;
 };
 
-// Funktion för att ladda varukorgen från cookies
 const loadCartFromCookie = (): CartItem[] => {
   const savedCart = Cookies.get('cart');
   return savedCart ? JSON.parse(savedCart) : [];

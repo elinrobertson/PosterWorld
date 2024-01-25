@@ -5,6 +5,7 @@ import CategoryPage from '../CategoryPage/CategoryPage';
 import ProductDetail from "../ProductDetail/ProductDetail";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
+import Confirmation from "../Confirmation/Confirmation";
 
 const Main: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Main: React.FC = () => {
         <Route path="/:category/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/confirmation" element={<Confirmation />} />
         {/* Lägg till fler rutter här */}
       </Routes>
     </div>
