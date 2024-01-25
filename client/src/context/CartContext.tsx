@@ -21,7 +21,7 @@ interface CartContextProps {
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
-export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
+export function CartProvider({ children }: PropsWithChildren<{ children: React.ReactElement }>) {
   const [cart, setCart] = useState<CartItem[]>(loadCartFromCookie);
   const [total, setTotal] = useState<number>(0);
 
@@ -53,7 +53,7 @@ export function CartProvider({ children }: PropsWithChildren<React.ReactNode>) {
       });
     },
     [setCart]
-  );
+  );  
 
   const removeFromCart = useCallback(
     (productId: string) => {

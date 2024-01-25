@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useState, ReactNode } from "react";
+import { createContext, PropsWithChildren, useState } from "react";
 import { useNavigate } from "react-router";
 import Cookies from 'js-cookie';
 
@@ -30,7 +30,7 @@ export interface UserRegistrationData {
 
 export const UserContext = createContext<UserContextProps | undefined>(undefined);
 
-function UserProvider({ children }: PropsWithChildren<ReactNode>) {
+function UserProvider({ children }: PropsWithChildren<{ children: React.ReactElement }>) {
   const [loggedinUser, setLoggedinUser] = useState<User | null>(null);
   const navigate = useNavigate();
 

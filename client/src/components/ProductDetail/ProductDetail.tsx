@@ -50,10 +50,18 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
   };
 
   const handleAddToCart = (stock: number) => {
-    if (stock > 0) {
-      addToCart(product._id);
+    if (stock > 0 && product && product._id && product.price) {
+      addToCart({
+        productId: product._id,
+        quantity: 1,
+        title: product.title,
+        images: product.images,
+        price: product.price,
+        price_id: product.price_id,
+      });
     }
   };
+  
 
   const handleGoBack = () => {
     navigate(-1); 

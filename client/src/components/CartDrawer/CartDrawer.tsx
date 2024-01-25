@@ -29,27 +29,36 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
     const fetchProducts = async () => {
       try {
         const productPromises = cart.map(async (item) => {
+          if (!item.productId) {
+            console.error('ProductId is undefined for item:', item);
+            return null;
+          }
+    
           const response = await fetch(`http://localhost:3000/api/products/${item.productId}`);
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
+    
           const data: Product = await response.json();
-          console.log('Fetched product data:', data);
+          // console.log('Fetched product data:', data);
           return { ...data, quantity: item.quantity, productId: item.productId };
         });
-
+    
         const productData = await Promise.all(productPromises);
-        setProducts(productData);
+        const filteredProductData = productData.filter((product) => product !== null) as Product[];
+        setProducts(filteredProductData);
 
-        const newTotalPrice = productData.reduce((total, product) => {
-          return total + product.price * product.quantity;
+    
+        const newTotalPrice = filteredProductData.reduce((total, product) => {
+          return total + (product?.price || 0) * (product?.quantity || 0);
         }, 0);
-
+    
         setTotalPrice(newTotalPrice);
       } catch (error) {
         console.error('Error fetching product information:', error);
       }
     };
+    
 
     fetchProducts();
   }, [cart]);

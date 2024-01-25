@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, PropsWithChildren } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useCart } from './CartContext';
 
 interface OrderItem {
@@ -17,7 +17,7 @@ interface OrderItem {
 
   const OrderContext = createContext<OrderContextProps | undefined>(undefined);
     
-    export function OrderProvider({ children }: PropsWithChildren<React.ReactNode>) {
+    export function OrderProvider({ children }: { children: ReactNode }) {
         const { cart } = useCart();
         const [order, setOrder] = useState<OrderItem[]>([]);
       

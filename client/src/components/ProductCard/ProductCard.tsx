@@ -1,13 +1,14 @@
 import React from 'react';
 import './ProductCard.css';
 import { useNavigate } from 'react-router-dom';
+// import { useCart } from "../../context/CartContext"; // Uppdatera med den faktiska sökvägen
 
 interface ProductCardProps {
   product: {
     _id: string;
     title: string;
     price: number;
-    price_id: string,
+    price_id: string;
     category: string;
     description: string;
     inStock: number;
@@ -17,6 +18,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
+  // const { addToCart } = useCart();
   const firstImage = product.images && product.images.length > 0 ? product.images[0] : 'placeholder.jpg';
 
   const handleImageClick = async () => {
