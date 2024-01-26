@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="navbar-wrapper">
       <div className="discount-container">
-        <p>Här kommer lite random text om en rabattkod</p>
+        <p>Använd koden 20OFF för 20% rabatt på ditt köp</p>
       </div>
       <div className="navbar-container">
         <div className="logo-container">
