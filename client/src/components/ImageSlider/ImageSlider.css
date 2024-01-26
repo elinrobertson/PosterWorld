@@ -48,7 +48,7 @@
 
 @media screen and (max-width: 390px) {
   .image-wrapper img {
-    height: 12rem; /* Du kan justera denna höjd baserat på din design */
+    height: 12rem;
     width: 9rem;
     margin: 0 3px;
   }

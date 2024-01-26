@@ -60,12 +60,13 @@
 }
 
 .category-description {
-    width: 60%;
+    width: 50%;
     display: flex;
     justify-content: center;
     text-align: center;
     word-wrap: wrap;
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
+    /* background-color: orange; */
 }
 

@@ -38,6 +38,26 @@ h3 {
     align-items: center;  
 }
   
+@media screen and (max-width: 1000px) {
+    .inspo-wrapper img {
+      margin: 0.5rem;
+      width: 45%;
+    }
+  }
+
+@media screen and (max-width: 550px) {
+    .inspo-wrapper img {
+        width: 80%;
+    }
+    .first-images  {
+      display: flex;
+      flex-direction: column;
+    }
+    .second-images  {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 
 
   

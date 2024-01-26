@@ -34,3 +34,18 @@
 .socials-section > * {
     margin-right: 1rem;
 }
+
+@media screen and (max-width: 430px) {
+    .footer-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .socials-section {
+        margin-left: 2.4rem;
+    }
+  }
