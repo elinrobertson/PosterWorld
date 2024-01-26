@@ -24,7 +24,7 @@ const ImageSlider = () => {
         const allProducts: Product[] = await response.json();
         const randomProducts = getRandomProducts(allProducts, 9);
         setSliderImages(randomProducts);
-        setVisibleProducts(calculateVisibleImages());
+        setVisibleProducts(calculateVisibleImages(randomProducts));
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -35,7 +35,9 @@ const ImageSlider = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setVisibleProducts(calculateVisibleImages());
+      if (sliderImages.length > 0) {
+        setVisibleProducts(calculateVisibleImages(sliderImages));
+      }
     };
 
     window.addEventListener('resize', handleResize);
@@ -52,22 +54,23 @@ const ImageSlider = () => {
 
   const handleNextClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % sliderImages.length);
-    setVisibleProducts(calculateVisibleImages());
   };
 
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + sliderImages.length) % sliderImages.length);
-    setVisibleProducts(calculateVisibleImages());
   };
 
   useEffect(() => {
     if (currentIndex === sliderImages.length) {
       setCurrentIndex(0);
     }
-    setVisibleProducts(calculateVisibleImages());
-  }, [currentIndex, sliderImages.length]);
 
-  const calculateVisibleImages = () => {
+    if (sliderImages.length > 0) {
+      setVisibleProducts(calculateVisibleImages(sliderImages));
+    }
+  }, [currentIndex, sliderImages]);
+
+  const calculateVisibleImages = (images: Product[]) => {
     const screenWidth = window.innerWidth;
     let visibleCount;
 
@@ -83,8 +86,8 @@ const ImageSlider = () => {
       visibleCount = 6;
     }
 
-    return sliderImages.slice(currentIndex, currentIndex + visibleCount).concat(
-      sliderImages.slice(0, Math.max(0, visibleCount - (sliderImages.length - currentIndex)))
+    return images.slice(currentIndex, currentIndex + visibleCount).concat(
+      images.slice(0, Math.max(0, visibleCount - (images.length - currentIndex)))
     );
   };
 
