@@ -15,6 +15,7 @@
     /* border: 1px #adb0b1 solid; */
     height: 25rem;
     width: 20rem;
+    /* background-color: orange; */
 }
 
 .productcard img {
@@ -42,3 +43,16 @@
 .productcard p {
     font-size: 0.9rem;
 }
+
+@media screen and (max-width: 1024px) {
+    .productcard {
+        height: 22rem;
+        width: 17rem;
+    }
+    .productcard h2 {
+        font-size: 1rem;
+    }
+    .productcard p {
+        font-size: 0.8rem;
+    }
+  }
