@@ -46,3 +46,10 @@
   transition: transform 0.3s ease;
 }
 
+@media screen and (max-width: 390px) {
+  .image-wrapper img {
+    height: 12rem; /* Du kan justera denna höjd baserat på din design */
+    width: 9rem;
+    margin: 0 3px;
+  }
+}

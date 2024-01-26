@@ -14,22 +14,17 @@ interface Product {
 const ImageSlider = () => {
   const [sliderImages, setSliderImages] = useState<Product[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRandomProducts = async () => {
       try {
-        // console.log('Fetching products...'); // Lägg till denna logg
-        // Hämta alla produkter med fetch
         const response = await fetch('http://localhost:3000/api/products');
         const allProducts: Product[] = await response.json();
-        // console.log('Fetched products:', allProducts);
-
-        // Slumpmässigt välj 9 produkter
         const randomProducts = getRandomProducts(allProducts, 9);
-
-        // Uppdatera staten med de slumpmässiga produkterna
         setSliderImages(randomProducts);
+        setVisibleProducts(calculateVisibleImages());
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -38,7 +33,18 @@ const ImageSlider = () => {
     fetchRandomProducts();
   }, []);
 
-  // Hjälpfunktion för att slumpmässigt välja n produkter från en array
+  useEffect(() => {
+    const handleResize = () => {
+      setVisibleProducts(calculateVisibleImages());
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [sliderImages, currentIndex]);
+
   const getRandomProducts = (array: Product[], n: number): Product[] => {
     const shuffledArray = array.sort(() => 0.5 - Math.random());
     return shuffledArray.slice(0, n);
@@ -46,23 +52,42 @@ const ImageSlider = () => {
 
   const handleNextClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % sliderImages.length);
+    setVisibleProducts(calculateVisibleImages());
   };
 
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + sliderImages.length) % sliderImages.length);
+    setVisibleProducts(calculateVisibleImages());
   };
 
-  // När currentIndex är lika med längden av bildlistan, sätt tillbaka till början
   useEffect(() => {
     if (currentIndex === sliderImages.length) {
       setCurrentIndex(0);
     }
+    setVisibleProducts(calculateVisibleImages());
   }, [currentIndex, sliderImages.length]);
 
-  // Se till att alltid visa 6 bilder samtidigt
-  const visibleProducts = sliderImages.slice(currentIndex, currentIndex + 6).concat(sliderImages.slice(0, Math.max(0, 6 - (sliderImages.length - currentIndex))));
+  const calculateVisibleImages = () => {
+    const screenWidth = window.innerWidth;
+    let visibleCount;
 
-  // Uppdaterad funktion för att hantera klick på bild
+    if (screenWidth < 710) {
+      visibleCount = 2;
+    } else if (screenWidth < 820) {
+      visibleCount = 3;
+    } else if (screenWidth < 1024) {
+      visibleCount = 4;
+    } else if (screenWidth < 1270) {
+      visibleCount = 5;
+    } else {
+      visibleCount = 6;
+    }
+
+    return sliderImages.slice(currentIndex, currentIndex + visibleCount).concat(
+      sliderImages.slice(0, Math.max(0, visibleCount - (sliderImages.length - currentIndex)))
+    );
+  };
+
   const handleImageClick = (productId: string, categoryName: string) => {
     navigate(`/${categoryName}/${productId}`);
   };
