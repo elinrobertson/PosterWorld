@@ -14,7 +14,6 @@ const Confirmation = () => {
       <ul>
         {order.map((item, index) => (
           <li key={index}>
-            <p>Produkt ID: {item.productId}, Antal: {item.quantity}</p>
             <p>Antal: {item.quantity}</p>
             <p>Titel: {item.title}</p>
             <p>Pris: {item.price}</p>

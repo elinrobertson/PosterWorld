@@ -117,4 +117,5 @@ const loadCartFromCookie = (): CartItem[] => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export { useCart };
+export { useCart };  export type { CartItem };
+
