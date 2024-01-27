@@ -17,8 +17,10 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   const addProductToOrder = (productId: string, quantity: number) => {
     console.log('addProductToOrder is called');
     try {
+      console.log('Cart:', cart);
       const productInfo = cart.find((item) => item.productId === productId);
       console.log('Product info:', productInfo);
+  
       if (productInfo) {
         setOrder((prevOrder) => {
           const updatedOrder = [...prevOrder, { ...productInfo, quantity }];
@@ -37,7 +39,9 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     console.log('OrderProvider - order:', order);
   }, [order]);
 
-  console.log('OrderProvider - order:', order);
+  useEffect(() => {
+    setOrder([...cart]); // Uppdatera order direkt från cart
+  }, [cart]);
 
   return (
     <OrderContext.Provider value={{ order, addProductToOrder }}>
@@ -55,5 +59,5 @@ const useOrder = () => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export { useOrder };  export type { OrderItem };
-
+export { useOrder };  
+export type { OrderItem };
