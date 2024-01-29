@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useOrder } from '../../context/OrderContext';
+import Cookies from 'js-cookie';
 import './Confirmation.css';
 
 const Confirmation = () => {
   const { order } = useOrder();
   console.log('Confirmation - Order:', order);
+
+  useEffect(() => {
+    Cookies.remove('cart')
+  },[])
 
   return (
     <div className='confirmation-wrapper'>

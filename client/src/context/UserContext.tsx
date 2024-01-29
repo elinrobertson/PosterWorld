@@ -31,7 +31,10 @@ export interface UserRegistrationData {
 export const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 function UserProvider({ children }: PropsWithChildren<{ children: React.ReactElement }>) {
-  const [loggedinUser, setLoggedinUser] = useState<User | null>(null);
+  const userCookie = Cookies.get('user');
+const initialUser = userCookie ? JSON.parse(userCookie) : null;
+const [loggedinUser, setLoggedinUser] = useState<User | null>(initialUser);
+
   const navigate = useNavigate();
 
   async function login(credentials: Credentials): Promise<void> {
