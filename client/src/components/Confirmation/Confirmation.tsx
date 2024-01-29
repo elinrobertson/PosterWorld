@@ -8,7 +8,9 @@ const Confirmation = () => {
   console.log('Confirmation - Order:', order);
 
   useEffect(() => {
-    Cookies.remove('cart')
+    Cookies.remove('cart', { path: '/' });
+    console.log("Confirmation - UseEffet");
+    
   },[])
 
   return (

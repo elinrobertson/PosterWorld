@@ -6,8 +6,8 @@ interface CartItem {
   quantity: number;
   price: number;
   price_id: string;
-  title: string; 
-  images: string[]; 
+  title: string;
+  images: string[];
 }
 
 interface CartContextProps {
@@ -17,6 +17,7 @@ interface CartContextProps {
   increaseQuantity: (productId: string) => void;
   decreaseQuantity: (productId: string) => void;
   total: number;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -26,23 +27,17 @@ export function CartProvider({ children }: PropsWithChildren<{ children: React.R
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
-    console.log('CartProvider - cart:', cart);
-  
-    Cookies.set('cart', JSON.stringify(cart), { sameSite: 'strict' });
-  
+    Cookies.set('cart', JSON.stringify(cart), { sameSite: 'strict', path: '/' });
+
     const newTotal = cart.reduce((total, item) => (item.price !== undefined ? total + item.price * item.quantity : total), 0);
-  
-    console.log('CartProvider - newTotal:', newTotal);
-  
     setTotal(newTotal);
   }, [cart]);
-  
+
   const addToCart = useCallback(
     (product: CartItem) => {
-      console.log('Adding to cart - Product ID:', product.productId, 'Price:', product.price);
       setCart((prevCart) => {
         const existingCartItemIndex = prevCart.findIndex((item) => item.productId === product.productId);
-  
+
         if (existingCartItemIndex !== -1) {
           const updatedCart = [...prevCart];
           updatedCart[existingCartItemIndex].quantity += 1;
@@ -53,7 +48,7 @@ export function CartProvider({ children }: PropsWithChildren<{ children: React.R
       });
     },
     [setCart]
-  );  
+  );
 
   const removeFromCart = useCallback(
     (productId: string) => {
@@ -96,8 +91,12 @@ export function CartProvider({ children }: PropsWithChildren<{ children: React.R
     [setCart]
   );
 
+  const clearCart = useCallback(() => {
+    setCart([]);
+  }, [setCart]);
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, total }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, total, clearCart }}>
       {children}
     </CartContext.Provider>
   );
@@ -112,10 +111,15 @@ const useCart = () => {
 };
 
 const loadCartFromCookie = (): CartItem[] => {
-  const savedCart = Cookies.get('cart');
-  return savedCart ? JSON.parse(savedCart) : [];
+  try {
+    const savedCart = Cookies.get('cart');
+    return savedCart ? JSON.parse(decodeURIComponent(savedCart)) : [];
+  } catch (error) {
+    console.error('Error parsing cart cookie:', error);
+    return [];
+  }
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export { useCart };  export type { CartItem };
-
+export { useCart };
+export type { CartItem };

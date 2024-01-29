@@ -32,8 +32,8 @@ export const UserContext = createContext<UserContextProps | undefined>(undefined
 
 function UserProvider({ children }: PropsWithChildren<{ children: React.ReactElement }>) {
   const userCookie = Cookies.get('user');
-const initialUser = userCookie ? JSON.parse(userCookie) : null;
-const [loggedinUser, setLoggedinUser] = useState<User | null>(initialUser);
+  const initialUser = userCookie ? JSON.parse(userCookie) : null;
+  const [loggedinUser, setLoggedinUser] = useState<User | null>(initialUser);
 
   const navigate = useNavigate();
 
