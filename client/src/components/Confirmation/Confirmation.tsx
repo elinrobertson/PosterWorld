@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useOrder } from '../../context/OrderContext';
 import Cookies from 'js-cookie';
 import './Confirmation.css';
@@ -8,10 +8,11 @@ const Confirmation = () => {
   console.log('Confirmation - Order:', order);
 
   useEffect(() => {
+    console.log("Confirmation - UseEffect - Order:", order);
     Cookies.remove('cart', { path: '/' });
-    console.log("Confirmation - UseEffet");
-    
-  },[])
+    console.log("Confirmation - UseEffect - Cart removed");
+  }, [order]);
+  
 
   return (
     <div className='confirmation-wrapper'>

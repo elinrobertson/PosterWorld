@@ -15,25 +15,27 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   const [order, setOrder] = useState<OrderItem[]>([]);
 
   const addProductToOrder = (productId: string, quantity: number) => {
-    console.log('addProductToOrder is called');
     try {
       console.log('Cart:', cart);
       const productInfo = cart.find((item) => item.productId === productId);
       console.log('Product info:', productInfo);
   
       if (productInfo) {
-        setOrder((prevOrder) => {
-          const updatedOrder = [...prevOrder, { ...productInfo, quantity }];
-          console.log('Product added to order:', { ...productInfo, quantity });
-          return updatedOrder;
-        });
+        setOrder((prevOrder) => [
+          ...prevOrder,
+          {
+            ...productInfo,
+            quantity,
+            total: productInfo.price * quantity,
+          },
+        ]);
       } else {
         console.error('Product information not found in cart');
       }
     } catch (error) {
       console.error('Error adding product to order:', error);
     }
-  };
+  };  
 
   useEffect(() => {
     console.log('OrderProvider - order:', order);
