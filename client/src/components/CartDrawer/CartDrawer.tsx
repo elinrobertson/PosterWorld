@@ -3,10 +3,10 @@ import { Drawer } from 'antd';
 import { useCart } from '../../context/CartContext';
 import { UserContext } from '../../context/UserContext';
 import { GoTrash } from "react-icons/go";
-import "./CartDrawer.css"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import { motion } from "framer-motion"
 import { Link } from 'react-router-dom';
+import "./CartDrawer.css"
 
 interface Product {
   productId: string;
@@ -137,7 +137,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
         ) : (
           <p>
             Du måste{' '}
-            <Link to="/login" className="login-link">
+            <Link to="/login" className="login-link" onClick={onClose}>
               logga in
             </Link>{' '}
             för att gå vidare till kassan
