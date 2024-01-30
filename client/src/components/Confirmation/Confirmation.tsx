@@ -1,41 +1,46 @@
-import { useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useOrder } from '../../context/OrderContext';
+import { CartContext } from '../../context/CartContext';
 import Cookies from 'js-cookie';
 import './Confirmation.css';
 
 const Confirmation = () => {
   const { order } = useOrder();
-  console.log('Confirmation - Order:', order);
+  const cartContext = useContext(CartContext);
 
-  // useEffect(() => {
-  //   console.log("Confirmation - UseEffect - Order:", order);
-  //   Cookies.remove('cart');
-  //   console.log("Confirmation - UseEffect - Cart removed");
-  // }, [order]);
+  if (!cartContext) {
+    return <p>Varukorgen kunde inte laddas...</p>;
+  }
 
-  
+  const { cart, clearCart } = cartContext;
+  const [localCartItems, setLocalCartItems] = useState<CartItem[]>([]);
+  const [total, setTotal] = useState<number>(0);
+
+  // Beräkna totalbeloppet
+  const totalPrice = localCartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+
   useEffect(() => {
-    console.log("Confirmation - UseEffect - Order:", order);
-  
-    // Konvertera den tomma arrayen till en sträng och sätt cookien
-    Cookies.set('cart', JSON.stringify([]));
-  
-    console.log("Confirmation - UseEffect - Cart set as empty array");
-  }, [order]);
-  
-  
-//   useEffect(() => {
-//     // Den här funktionen körs när komponenten unmountas
-//     return () => {
-//         Cookies.remove('cart'); // Ta bort 'cart'-cookien när komponenten unmountas
-//     };
-// }, []);
+    if (cart && cart.length > 0) {
+      setLocalCartItems(cart);
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    // Ställ in 'cart'-cookien när komponenten monteras
+    Cookies.set('cart', JSON.stringify(localCartItems));
+    console.log("Confirmation - UseEffect - Cart set as localCartItems");
+
+    // Cleara cart i CartContext när komponenten unmounts
+    return () => {
+      clearCart();
+    };
+  }, [localCartItems, clearCart]);
 
   return (
     <div className='confirmation-wrapper'>
       <h3>Orderbekräftelse</h3>
       <ul>
-        {order.map((item, index) => (
+        {localCartItems.map((item, index) => (
           <li key={index}>
             <div className='confirmation-image'>
               <img src={item.images[0]} alt={`Product ${index + 1}`} />
@@ -49,7 +54,7 @@ const Confirmation = () => {
         ))}
       </ul>
       <div className='total-price'>
-        <p>Totalt: {order.reduce((acc, item) => acc + item.price * item.quantity, 0)} kr</p>
+        <p>Totalt: {totalPrice} kr</p>
       </div>
     </div>
   );

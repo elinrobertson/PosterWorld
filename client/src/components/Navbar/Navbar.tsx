@@ -136,16 +136,8 @@ const Navbar: React.FC = () => {
             </NavLink>
           )}
           <motion.div className="cart-icon" onClick={showDrawer}>
-            {(!isCartEmpty && location.pathname !== '/confirmation') ? (
-              <HiShoppingBag />
-            ) : (
-              <HiOutlineShoppingBag />
-            )}
-            {cartItemCount > 0 && (
-              <div className={`cart-item-count ${location.pathname === '/confirmation' ? 'hidden' : ''}`}>
-                {cartItemCount}
-              </div>
-            )}
+            {isCartEmpty ? <HiOutlineShoppingBag /> : <HiShoppingBag />}
+            {cartItemCount > 0 && <div className="cart-item-count">{cartItemCount}</div>}
           </motion.div>
 
         </div>
