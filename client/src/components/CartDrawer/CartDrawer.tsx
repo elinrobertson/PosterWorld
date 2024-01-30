@@ -11,7 +11,7 @@ interface Product {
   title: string;
   images: string[];
   price: number;
-  price_id: string,
+  price_id: string;
   quantity: number;
 }
 
@@ -28,46 +28,48 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        if (cart.length === 0) {
+          setProducts([]); // Sätt products till en tom array om cart är tom
+          setTotalPrice(0); // Sätt totalPrice till 0 om cart är tom
+          return;
+        }
+
         const productPromises = cart.map(async (item) => {
           if (!item.productId) {
             console.error('ProductId is undefined for item:', item);
             return null;
           }
-    
+
           const response = await fetch(`http://localhost:3000/api/products/${item.productId}`);
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
-    
+
           const data: Product = await response.json();
-          // console.log('Fetched product data:', data);
           return { ...data, quantity: item.quantity, productId: item.productId };
         });
-    
+
         const productData = await Promise.all(productPromises);
         const filteredProductData = productData.filter((product) => product !== null) as Product[];
         setProducts(filteredProductData);
 
-    
         const newTotalPrice = filteredProductData.reduce((total, product) => {
           return total + (product?.price || 0) * (product?.quantity || 0);
         }, 0);
-    
+
         setTotalPrice(newTotalPrice);
       } catch (error) {
         console.error('Error fetching product information:', error);
       }
     };
-    
 
     fetchProducts();
-  }, [cart]);
+  }, [cart, visible]); // Lägg till visible i beroendelistan
 
   async function handlePayment() {
     try {
-      // Filtrera bort produkter där productId är undefined
       const validProducts = products.filter((product) => product.productId);
-  
+
       const response = await fetch('http://localhost:3000/api/checkout/create-checkout-session', {
         method: 'POST',
         headers: {
@@ -75,7 +77,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
         },
         body: JSON.stringify(validProducts),
       });
-  
+
       if (response.ok) {
         const { url } = await response.json();
         window.location.href = url;
@@ -86,7 +88,6 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
       // Hantera andra fel här
     }
   }
-  
 
   return (
     <Drawer title={"Varukorg"} placement="right" onClose={onClose} open={visible}>

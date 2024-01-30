@@ -7,12 +7,22 @@ const Confirmation = () => {
   const { order } = useOrder();
   console.log('Confirmation - Order:', order);
 
+  // useEffect(() => {
+  //   console.log("Confirmation - UseEffect - Order:", order);
+  //   Cookies.remove('cart');
+  //   console.log("Confirmation - UseEffect - Cart removed");
+  // }, [order]);
+
+  
   useEffect(() => {
     console.log("Confirmation - UseEffect - Order:", order);
-    Cookies.remove('cart', { path: '/' });
-    console.log("Confirmation - UseEffect - Cart removed");
+  
+    // Konvertera den tomma arrayen till en sträng och sätt cookien
+    Cookies.set('cart', JSON.stringify([]));
+  
+    console.log("Confirmation - UseEffect - Cart set as empty array");
   }, [order]);
-
+  
   
 //   useEffect(() => {
 //     // Den här funktionen körs när komponenten unmountas
