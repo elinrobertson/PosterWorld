@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Drawer } from 'antd';
 import { useCart } from '../../context/CartContext';
+import { UserContext } from '../../context/UserContext';
 import { GoTrash } from "react-icons/go";
 import "./CartDrawer.css"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import { motion } from "framer-motion"
+import { Link } from 'react-router-dom';
 
 interface Product {
   productId: string;
@@ -24,6 +26,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const userContext = useContext(UserContext);
+  const { loggedinUser } = userContext || { loggedinUser: null };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -68,6 +72,12 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
 
   async function handlePayment() {
     try {
+      if (!loggedinUser) {
+        // Visa meddelande att användaren måste vara inloggad
+        console.log("Du måste logga in för att gå vidare till kassan");
+        return;
+      }
+
       const validProducts = products.filter((product) => product.productId);
 
       const response = await fetch('http://localhost:3000/api/checkout/create-checkout-session', {
@@ -117,12 +127,22 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
           <div className="total-price">
             <p>Totalt pris: {totalPrice} kr</p>
           </div>
+          {loggedinUser ? (
           <motion.button 
             className='checkout-button'
             onClick={handlePayment}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}>Gå vidare till kassan
           </motion.button>
+        ) : (
+          <p>
+            Du måste{' '}
+            <Link to="/login" className="login-link">
+              logga in
+            </Link>{' '}
+            för att gå vidare till kassan
+          </p>
+        )}
         </>
       )}
     </Drawer>
