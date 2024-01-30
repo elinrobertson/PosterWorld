@@ -147,6 +147,11 @@
     z-index: 1;
 }
 
+.hidden {
+    display: none;
+  }
+  
+
 .person-icon {
     text-decoration: none;
     color: inherit;

@@ -12,7 +12,14 @@ const Confirmation = () => {
     Cookies.remove('cart', { path: '/' });
     console.log("Confirmation - UseEffect - Cart removed");
   }, [order]);
+
   
+//   useEffect(() => {
+//     // Den här funktionen körs när komponenten unmountas
+//     return () => {
+//         Cookies.remove('cart'); // Ta bort 'cart'-cookien när komponenten unmountas
+//     };
+// }, []);
 
   return (
     <div className='confirmation-wrapper'>
