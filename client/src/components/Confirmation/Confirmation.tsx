@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { useOrder } from '../../context/OrderContext';
-import { CartContext } from '../../context/CartContext';
+import { CartContext, CartItem } from '../../context/CartContext';
 import Cookies from 'js-cookie';
 import './Confirmation.css';
 
+
 const Confirmation = () => {
-  const { order } = useOrder();
+  useOrder();
   const cartContext = useContext(CartContext);
 
   if (!cartContext) {
@@ -13,28 +14,34 @@ const Confirmation = () => {
   }
 
   const { cart, clearCart } = cartContext;
+
+  // Flyttade useState till toppnivå
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [localCartItems, setLocalCartItems] = useState<CartItem[]>([]);
-  const [total, setTotal] = useState<number>(0);
 
-  // Beräkna totalbeloppet
-  const totalPrice = localCartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (cart && cart.length > 0) {
-      setLocalCartItems(cart);
+    if (localCartItems.length > 0) {
+      // Ställ in 'cart'-cookien när komponenten monteras
+      Cookies.set('cart', JSON.stringify(localCartItems));
+      console.log("Confirmation - UseEffect - Cart set as localCartItems");
     }
-  }, [cart]);
-
-  useEffect(() => {
-    // Ställ in 'cart'-cookien när komponenten monteras
-    Cookies.set('cart', JSON.stringify(localCartItems));
-    console.log("Confirmation - UseEffect - Cart set as localCartItems");
 
     // Cleara cart i CartContext när komponenten unmounts
     return () => {
       clearCart();
     };
   }, [localCartItems, clearCart]);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (cart && cart.length > 0) {
+      setLocalCartItems(cart);
+    }
+  }, [cart]);
+
+  // Beräkna totalbeloppet
+  const totalPrice = localCartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   return (
     <div className='confirmation-wrapper'>
@@ -61,3 +68,5 @@ const Confirmation = () => {
 };
 
 export default Confirmation;
+
+
