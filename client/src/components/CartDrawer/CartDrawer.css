@@ -81,3 +81,8 @@
     text-decoration: underline;
   }
   
+  .login-link:hover {
+    color: black;
+    text-decoration: underline;
+  }
+  
