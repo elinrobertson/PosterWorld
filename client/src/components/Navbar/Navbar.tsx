@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { HiOutlineShoppingBag, HiShoppingBag } from 'react-icons/hi2';
+import { IoMenu } from "react-icons/io5";
 import { GoPerson, GoPersonFill } from 'react-icons/go';
-// import { IoEarthOutline } from 'react-icons/io5';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
@@ -25,6 +25,7 @@ const Navbar: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   if (!userContext) {
     return <div>Loading...</div>;
@@ -42,10 +43,9 @@ const Navbar: React.FC = () => {
         }
 
         const data = await response.json();
-        // console.log('Fetched categories:', data);
         setCategories(data);
       } catch (error) {
-        // console.error('Error fetching categories:', error);
+        console.error('Error fetching categories:', error);
       }
     };
 
@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
     if (categories.length === 0) {
       fetchCategories();
     }
-  }, [categories]);  // Beroendearray uppdaterat för att köra useEffect varje gång categories ändras
+  }, [categories]);
 
   const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const isCartEmpty = cartItemCount === 0;
@@ -67,12 +67,7 @@ const Navbar: React.FC = () => {
   };
 
   const handleLogout = async () => {
-    // console.log("Before logout:", loggedinUser);
-  
-    // Anropa logout från UserContext
     await logout();
-  
-    // console.log("After logout:", loggedinUser);
     window.scrollTo(0, 0);
   };
 
@@ -80,7 +75,7 @@ const Navbar: React.FC = () => {
     {
       key: 'logout',
       label: 'Logga ut',
-      onClick: handleLogout, // Använd handleLogout-funktionen här
+      onClick: handleLogout,
     },
   ];
 
@@ -90,15 +85,11 @@ const Navbar: React.FC = () => {
         <p>Använd koden 20OFF för 20% rabatt på ditt köp</p>
       </div>
       <div className="navbar-container">
-        <div className="logo-container">
-          <h2>
-            <NavLink to="/" className="logo-link">
-              <img src={logga} alt="" />
-              
-            </NavLink>
-          </h2>
+
+        <div className="menu-button" onClick={() => setMenuOpen(!isMenuOpen)}>
+          <IoMenu />
         </div>
-        <div className="links-container">
+        <div className={`links-container ${isMenuOpen ? 'menu-open' : ''} ${isMenuOpen ? 'hidden' : ''}`}>
           <ul>
             {categories.map((category) => (
               <motion.li
@@ -110,11 +101,10 @@ const Navbar: React.FC = () => {
                 <NavLink
                   to={`/${category.title.toLowerCase()}`}
                   onClick={() => {
-                    console.log('Before:', activeCategory);
                     setActiveCategory(
                       activeCategory === category.title.toLowerCase() ? null : category.title.toLowerCase()
                     );
-                    console.log('After:', activeCategory);
+                    setMenuOpen(false);
                   }}
                 >
                   {category.title}
@@ -123,11 +113,18 @@ const Navbar: React.FC = () => {
             ))}
           </ul>
         </div>
+        <div className="logo-container">
+          <h2>
+            <NavLink to="/" className="logo-link">
+              <img src={logga} alt="" />
+            </NavLink>
+          </h2>
+        </div>
         <div className="icons-container">
           {loggedinUser ? (
             <Dropdown menu={{ items }} trigger={['click']}>
               <NavLink to="#" className="person-icon">
-                <GoPersonFill style={{ color: '#89B9AD' }}/>
+                <GoPersonFill style={{ color: '#89B9AD' }} />
               </NavLink>
             </Dropdown>
           ) : (
@@ -139,7 +136,6 @@ const Navbar: React.FC = () => {
             {isCartEmpty ? <HiOutlineShoppingBag /> : <HiShoppingBag />}
             {cartItemCount > 0 && <div className="cart-item-count">{cartItemCount}</div>}
           </motion.div>
-
         </div>
       </div>
       <CartDrawer visible={drawerVisible} onClose={closeDrawer} />
