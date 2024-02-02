@@ -84,7 +84,6 @@ const Navbar: React.FC = () => {
         <p>Använd koden 20OFF för 20% rabatt på ditt köp</p>
       </div>
       <div className="navbar-container">
-
         <div className="menu-button" onClick={() => setMenuOpen(!isMenuOpen)}>
           <IoMenu />
         </div>

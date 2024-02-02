@@ -71,7 +71,6 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
     <div className="productdetail-wrapper">
       {product ? (
         <>
-        
           <div className="image-container">
             <img className="product-img" src={product.images[currentSlide]} alt={product.title} />
             {product.images.length > 1 && (
