@@ -1,8 +1,8 @@
 // import React from 'react'
 import Hero from '../Hero/Hero';
 import ImageSlider from '../ImageSlider/ImageSlider';
-import "./Home.css"
 import { inspo1, inspo2, inspo3, inspo4 } from '../../assets/Images';
+import "./Home.css"
 
 
 const Home = () => {

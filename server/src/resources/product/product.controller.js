@@ -1,18 +1,16 @@
 const { ProductModel } = require("./product.model");
 
 
-//Hämtar alla produkter
 const getProducts = async () => {
     try {
         const products = await ProductModel.find();
-        return products; // Returnera produkterna istället för att skicka svar
+        return products; 
     } catch (error) {
         console.error("Error fetching products:", error.message);
-        throw error; // Kasta felet för att hantera det i den överliggande koden
+        throw error; 
     }
 };
 
-//Hämtar alla produkter i en specifik kategori
 const getProductsByCategory = async (req, res) => {
     try {
         const products = await ProductModel.find({ category: req.params.categoryName });
@@ -22,8 +20,7 @@ const getProductsByCategory = async (req, res) => {
     }
 };
 
-//Hämtar produkter efter ID
-async function getProductsById(req, res) {
+const getProductsById = async (req, res) => {
     try {
         const product = await ProductModel.findById(req.params.id);
 
@@ -35,7 +32,6 @@ async function getProductsById(req, res) {
         return res.status(500).json({ error: "Ett fel uppstod vid hämtning av produkten från databasen." });
     }
 }
-
 
 const getProductByTitle = async (req, res) => {
     const title = req.params.title;
@@ -52,7 +48,6 @@ const getProductByTitle = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
-
 
 
 module.exports = { getProducts, getProductsByCategory, getProductsById, getProductByTitle };

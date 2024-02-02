@@ -17,7 +17,6 @@ const Main: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/confirmation" element={<Confirmation />} />
-        {/* Lägg till fler rutter här */}
       </Routes>
     </div>
   );

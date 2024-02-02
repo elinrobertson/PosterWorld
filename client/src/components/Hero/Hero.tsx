@@ -13,7 +13,6 @@ const slides: Slide[] = [
     { imageUrl: hero3 },
   ];
 
-
 const Hero = () => {
     const [currentSlide, setCurrentSlide] = React.useState(0);
     const totalSlides = slides.length;

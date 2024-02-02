@@ -33,8 +33,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
     const fetchProducts = async () => {
       try {
         if (cart.length === 0) {
-          setProducts([]); // Sätt products till en tom array om cart är tom
-          setTotalPrice(0); // Sätt totalPrice till 0 om cart är tom
+          setProducts([]); 
+          setTotalPrice(0);
           return;
         }
 
@@ -68,12 +68,11 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
     };
 
     fetchProducts();
-  }, [cart, visible]); // Lägg till visible i beroendelistan
+  }, [cart, visible]); 
 
   async function handlePayment() {
     try {
       if (!loggedinUser) {
-        // Visa meddelande att användaren måste vara inloggad
         console.log("Du måste logga in för att gå vidare till kassan");
         return;
       }

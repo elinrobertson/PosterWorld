@@ -42,7 +42,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   }, [order]);
 
   useEffect(() => {
-    setOrder([...cart]); // Uppdatera order direkt från cart
+    setOrder([...cart]);
   }, [cart]);
 
   return (

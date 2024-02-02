@@ -2,7 +2,6 @@ const { UserModel } = require("./user.model");
 const bcrypt = require("bcrypt");
 
 
-// Registrera användare
 const registerUser = async(req,res, next) => {
     try {
         const existingUser = await UserModel.findOne({ email: req.body.email })
@@ -20,7 +19,7 @@ const registerUser = async(req,res, next) => {
     }
 }
 
-//Logga in användare
+
 const loginUser = async (req, res, next) => {
     try {
       const existingUser = await UserModel.findOne({
@@ -43,8 +42,6 @@ const loginUser = async (req, res, next) => {
   };
 
 
-
-//Logga ut användare
 const logoutUser = async (req, res, next) => {
     try {
         console.log("Session before logout:", req.session);

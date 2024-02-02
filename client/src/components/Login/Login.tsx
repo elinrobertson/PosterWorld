@@ -1,12 +1,11 @@
 import { useContext, useState } from 'react';
 import { Credentials, UserContext } from '../../context/UserContext';
 import { Link } from 'react-router-dom';
-import "./Login.css"
 import { motion } from 'framer-motion';
+import "./Login.css"
 
 const Login = () => {
   const userContext = useContext(UserContext);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

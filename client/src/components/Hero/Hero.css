@@ -2,20 +2,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* width: 100%; */
     height: 80vh;
     width: 100vw;
     margin-top: 6rem;
     overflow: hidden;
     position: relative;
-    /* background-color: orange; */
 }
 
 .hero-section img {
     width: 90%;
     height: 100%;
     object-fit: cover;
-    /* object-position: center top;  */
     position: absolute;
 }
 

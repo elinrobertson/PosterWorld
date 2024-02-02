@@ -1,12 +1,10 @@
 const { ProductModel } = require("../product/product.model")
- const { CategoryModel } = require("./category.model");
+const { CategoryModel } = require("./category.model");
 
 
-// Hämtar alla kategorier
 const getCategories = async () => {
     try {
         const categories = await CategoryModel.find();
-        // console.log("Categories from controller:", categories);
         return categories;
     } catch (error) {
         console.log("Error in controller:", error);
@@ -33,13 +31,6 @@ const getProductsByCategory = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
-
-
-
-
-
-
-
 
 
 module.exports = { getCategories, getCategoryById, getProductsByCategory };

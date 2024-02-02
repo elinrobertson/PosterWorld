@@ -6,7 +6,6 @@ const UserSchema = new Schema({
     lastName: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true, select: false },
-    // isAdmin: { type: Boolean, required: true, default: false },
   });
 
 const UserModel = models.user || model("user", UserSchema);

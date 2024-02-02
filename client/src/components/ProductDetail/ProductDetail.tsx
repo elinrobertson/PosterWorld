@@ -61,7 +61,6 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
       });
     }
   };
-  
 
   const handleGoBack = () => {
     navigate(-1); 

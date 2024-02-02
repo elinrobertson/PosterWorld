@@ -21,18 +21,16 @@ app.use(
     cookieSession({
       name: "session",
       keys: ["aVeryS3cr3tK3y"],
-      maxAge: 1000 * 60 * 60 * 24, // 24 Hours
+      maxAge: 1000 * 60 * 60 * 24,
       sameSite: "strict",
       httpOnly: true,
       secure: false,
     })
   );
 
-// Loggningsmiddleware för att visa detaljerade felmeddelanden
-
 app.use((err, req, res, next) => {
   console.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
-  console.error(err.stack); // Skriv ut stack trace
+  console.error(err.stack);
   next(err);
 });
 

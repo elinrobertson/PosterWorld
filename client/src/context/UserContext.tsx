@@ -34,7 +34,6 @@ function UserProvider({ children }: PropsWithChildren<{ children: React.ReactEle
   const userCookie = Cookies.get('user');
   const initialUser = userCookie ? JSON.parse(userCookie) : null;
   const [loggedinUser, setLoggedinUser] = useState<User | null>(initialUser);
-
   const navigate = useNavigate();
 
   async function login(credentials: Credentials): Promise<void> {
@@ -51,8 +50,8 @@ function UserProvider({ children }: PropsWithChildren<{ children: React.ReactEle
         const user: User = await response.json();
         setLoggedinUser(user);
         console.log("Användaren har loggats in:", user);
-        Cookies.set('user', JSON.stringify(user), { expires: 7 }); // Sätt användarcookie
-        navigate("/"); // Omdirigera till startsidan efter lyckad inloggning
+        Cookies.set('user', JSON.stringify(user), { expires: 7 });
+        navigate("/");
       }
     } catch (error) {
       console.error("Fel:", error);
@@ -71,13 +70,10 @@ function UserProvider({ children }: PropsWithChildren<{ children: React.ReactEle
       });
 
       if (response.ok) {
-        // Valfritt: hantera registreringssuccé här
         const registeredUser: User = await response.json();
         console.log("Användaren har registrerats:", registeredUser);
-        // Du kan automatiskt logga in användaren efter registreringen
         login({ email: userData.email, password: userData.password });
       } else {
-        // Hantera registreringsfel
         console.error("Registrering misslyckades");
       }
     } catch (error) {
@@ -90,7 +86,7 @@ function UserProvider({ children }: PropsWithChildren<{ children: React.ReactEle
       console.log("Loggar ut användaren:", loggedinUser);
 
       if (loggedinUser) {
-        Cookies.remove('user'); // Ta bort användarcookie
+        Cookies.remove('user');
         setLoggedinUser(null);
         navigate("/");
         console.log("Användaren har loggats ut");

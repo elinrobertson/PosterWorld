@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import './ImageSlider.css';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import './ImageSlider.css';
 
-// Deklarera en generisk typ för produkter
 interface Product {
   _id: string;
   title: string;

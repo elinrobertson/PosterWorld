@@ -49,7 +49,6 @@ const Navbar: React.FC = () => {
       }
     };
 
-    // Only fetch categories on mount
     if (categories.length === 0) {
       fetchCategories();
     }

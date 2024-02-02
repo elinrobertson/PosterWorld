@@ -1,5 +1,4 @@
 .confirmation-wrapper {
-    /* height: 80vh; */
     margin-top: 6rem;
     display: flex;
     flex-direction: column;
@@ -20,7 +19,7 @@
 .confirmation-wrapper li {
     display: flex;
     justify-content: center;
-    align-items: center; /* Centrera element i tvärriktningen (horisontellt) */
+    align-items: center;
     width: 40rem;
     margin-bottom: 0.5rem;
 }

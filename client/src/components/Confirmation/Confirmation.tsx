@@ -15,19 +15,15 @@ const Confirmation = () => {
 
   const { cart, clearCart } = cartContext;
 
-  // Flyttade useState till toppnivå
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [localCartItems, setLocalCartItems] = useState<CartItem[]>([]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (localCartItems.length > 0) {
-      // Ställ in 'cart'-cookien när komponenten monteras
       Cookies.set('cart', JSON.stringify(localCartItems));
       console.log("Confirmation - UseEffect - Cart set as localCartItems");
     }
-
-    // Cleara cart i CartContext när komponenten unmounts
     return () => {
       clearCart();
     };
@@ -40,7 +36,6 @@ const Confirmation = () => {
     }
   }, [cart]);
 
-  // Beräkna totalbeloppet
   const totalPrice = localCartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   return (

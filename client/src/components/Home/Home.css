@@ -6,7 +6,6 @@ h3 {
     text-align: center;
     padding-top: 3rem;
     margin-bottom: 1rem;
-    /* background-color: orange; */
 }
 
 .imageslider-arrows {
@@ -18,7 +17,6 @@ h3 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background-color: orange; */
   }
 
 .inspo-wrapper img {
